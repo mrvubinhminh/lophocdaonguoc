@@ -304,6 +304,39 @@ html.mode-board .screen.play{padding:max(.35rem,env(safe-area-inset-top)) max(.6
 @keyframes streak{0%{opacity:0;transform:translate(-50%,20px) scale(.5)}12%{opacity:1;transform:translate(-50%,0) scale(1.15)}22%{transform:translate(-50%,0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-14px) scale(1)}}
 @keyframes flame{to{transform:scale(1.25) rotate(-8deg)}}
 @media (prefers-reduced-motion:reduce){.ans-card.shake,.slot.ok-pulse,.streak-pop span{animation:none}.streak-pop{animation:none}}
+
+/* Cổng học sinh */
+.pt-panel{max-width:46rem}
+.pt-h{font-size:1.05rem;margin:1.1rem 0 .5rem}
+.pt-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.pt-chip{font:inherit;font-weight:700;padding:.55rem 1.1rem;border:2px solid var(--line);border-radius:999px;background:var(--paper);color:var(--text);cursor:pointer;min-height:2.75rem}
+.pt-chip.on{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 16%,var(--paper));color:var(--primary)}
+.pt-chip:focus-visible,.pt-lesson:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.pt-search{width:100%;font:inherit;padding:.55rem .8rem;border:2px solid var(--line);border-radius:10px;background:var(--paper);color:var(--text);margin-bottom:.6rem}
+.pt-list{list-style:none;margin:.2rem 0 0;padding:0;display:grid;gap:.55rem}
+.pt-lesson{width:100%;display:grid;grid-template-columns:1fr auto;grid-template-areas:"n g" "m g";gap:.15rem .8rem;align-items:center;text-align:left;font:inherit;padding:.8rem 1rem;border:2px solid var(--line);border-radius:14px;background:var(--paper);color:var(--text);cursor:pointer}
+.pt-lesson:hover:not(:disabled){border-color:var(--primary);transform:translateY(-1px)}
+.pt-lesson:disabled{opacity:.6;cursor:wait}
+.pt-name{grid-area:n;font-weight:700}
+.pt-meta{grid-area:m;color:var(--muted);font-size:.88rem}
+.pt-go{grid-area:g;color:var(--primary);font-weight:700;white-space:nowrap}
+.pt-tag{display:inline-block;margin-left:.4rem;padding:.05rem .5rem;border-radius:999px;border:1px solid var(--line);font-size:.8rem}
+.pt-tag.soon{border-color:#d97706;color:#b45309}.pt-tag.late{border-color:#b91c1c;color:#b91c1c}
+.pt-empty{color:var(--muted);padding:.5rem}
+
+.pt-grp{margin-top:.9rem}
+.pt-gh{font-size:1rem;margin:0 0 .3rem;display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
+.pt-gp{font-size:.82rem;font-weight:600;color:var(--muted)}
+.pt-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:.5rem}
+.pt-bar i{display:block;height:100%;background:var(--primary);border-radius:99px;transition:width .3s}
+.pt-lesson.locked{opacity:.6;cursor:not-allowed;border-style:dashed}
+.pt-lesson.next{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 18%,transparent)}
+.pt-tag.ok{border-color:#15803d;color:#15803d}.pt-tag.next{border-color:var(--primary);color:var(--primary);font-weight:700}.pt-tag.lock{color:var(--muted)}
+.pt-note{width:100%;margin:.2rem 0 .6rem;color:var(--muted)}
+.pt-next-box{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+
+.pt-me{display:flex;flex-wrap:wrap;gap:.4rem .7rem;align-items:center;padding:.55rem .8rem;margin:0 0 .4rem;border:1px solid var(--line);border-radius:.8rem;background:var(--paper)}
+.pt-login{display:grid;gap:.35rem;max-width:24rem;margin:.6rem auto 0;text-align:left}
 </style>
 <style id="css-teacher">
 .home-head,.lec-head{display:flex;gap:var(--s3);justify-content:space-between;align-items:flex-start;flex-wrap:wrap;background:var(--surface);
@@ -517,9 +550,10 @@ body.hm-lock{overflow:hidden}
 .hm-menu summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 .hm-menu-list{position:absolute;right:0;top:calc(100% + .35rem);z-index:40;min-width:13.5rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.18);padding:.4rem;display:flex;flex-direction:column;gap:.1rem}
 .hm-menu-h{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.25rem .5rem}
-.hm-menu-list a{display:grid;grid-template-columns:auto 1fr;column-gap:.5rem;align-items:center;padding:.45rem .5rem;border-radius:calc(var(--radius) - .2rem);color:var(--text);text-decoration:none;font-weight:600}
-.hm-menu-list a small{grid-column:2;color:var(--muted);font-weight:400;font-size:.75rem}
-.hm-menu-list a:hover,.hm-menu-list a:focus-visible{background:var(--paper);color:var(--primary)}
+.hm-menu-list button{font:inherit;width:100%;text-align:left;background:none;border:0;cursor:pointer}
+.hm-menu-list a,.hm-menu-list button{display:grid;grid-template-columns:auto 1fr;column-gap:.5rem;align-items:center;padding:.45rem .5rem;border-radius:calc(var(--radius) - .2rem);color:var(--text);text-decoration:none;font-weight:600}
+.hm-menu-list a small,.hm-menu-list button small{grid-column:2;color:var(--muted);font-weight:400;font-size:.75rem}
+.hm-menu-list a:hover,.hm-menu-list a:focus-visible,.hm-menu-list button:hover,.hm-menu-list button:focus-visible{background:var(--paper);color:var(--primary)}
 
 .lib{margin:.75rem 0;border:1px solid var(--line);border-radius:var(--radius);padding:.3rem .75rem;background:var(--paper)}
 .lib summary{cursor:pointer;font-weight:700;padding:.35rem 0}
@@ -635,6 +669,19 @@ body.hm-lock{overflow:hidden}
 .nt-out{width:100%;font:inherit;line-height:1.55;border:2px solid var(--line);border-radius:var(--radius);padding:.7rem .9rem;background:var(--paper);color:var(--text);resize:vertical}
 .nt-btns{margin-top:.6rem;flex-wrap:wrap}
 @media(max-width:600px){.nt-grid{grid-template-columns:1fr}}
+
+.pt-sep{border:0;border-top:2px dashed var(--line);margin:1.2rem 0 0}
+.pt-adm{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.35rem}
+.pt-adm li{display:flex;justify-content:space-between;align-items:center;gap:.6rem;border:1px solid var(--line);border-radius:10px;padding:.35rem .7rem}
+.pt-grow{display:grid;grid-template-columns:1fr auto auto;gap:.4rem;margin-bottom:.4rem}
+.pt-grow input{min-width:0}
+.pt-ab{display:flex;gap:.3rem;flex-shrink:0}
+.pt-adm li{align-items:flex-start}
+
+.bd-tbl td,.bd-tbl th{text-align:center;white-space:nowrap}.bd-tbl td:first-child,.bd-tbl th:first-child{text-align:left;position:sticky;left:0;background:var(--paper)}.bd-tbl small{font-weight:400;opacity:.75}
+.bd-miss{background:#fde2e1;color:#a4281f}.bd-late{background:#fff0c2;color:#8a5a00}.bd-ok{background:#e1f5e6}.bd-list{margin:.4rem 0 .6rem 1.1rem;padding:0}.bd-list li{margin:.25rem 0}
+@media (prefers-color-scheme:dark){.bd-miss{background:#4a2020;color:#ffb3ad}.bd-late{background:#4a3c14;color:#ffd77a}.bd-ok{background:#1c3a26}}
+.web-bar #webUrl{visibility:hidden;pointer-events:none}
 </style>
 </head>
 <body>
@@ -964,8 +1011,9 @@ function renderIntro() {
   }
   let saved = {};
   try { saved = JSON.parse(lsGet(PK) || '{}') || {}; } catch (e) { saved = {}; }
+  if (c.fixed) saved = { name: c.fixed.name, cls: c.fixed.cls, stt: String(c.fixed.stt) };
   const preName = c.board ? '' : (saved.name || '');
-  const preCls = c.prefillClass || saved.cls || '';
+  const preCls = c.fixed ? c.fixed.cls : (c.prefillClass || saved.cls || '');
   const extra = (c.introButtons || []).map(b => '<button type="button" class="btn btn-ghost" data-act="' + esc(b.act) + '">' + esc(b.label) + '</button>').join('');
   appEl().innerHTML =
     '<main class="screen intro"><div class="panel intro-panel">' +
@@ -976,13 +1024,14 @@ function renderIntro() {
     '</form>' + (extra ? '<div class="intro-extra">' + extra + '</div>' : '') +
     (c.profile ? '<p class="credit">' + logoHtml('sm') + '<span>Ứng dụng lớp học đảo ngược · Thầy Vũ Tiến Lực · Trường THPT Nguyễn Hữu Cảnh</span></p>' : '') +
     '</div></main>';
+  if (c.fixed) ['#inName', '#inClass', '#inStt'].forEach(id => { const f = $(id); if (f) f.readOnly = true; });
   $('#introForm').addEventListener('submit', onIntroSubmit);
   $('#introForm').addEventListener('change', e => {
     if (e.target.name !== 'theme') return;
     G.theme = e.target.value; applyTheme(G.theme);
     if (G.cfg.remember) lsSet(TK, G.theme);
   });
-  setTimeout(() => { const f = $(preName ? '#inClass' : '#inName'); if (f && !preCls && preName) f.focus(); else if ($('#inName')) $('#inName').focus(); }, 0);
+  setTimeout(() => { if (c.fixed) { const r = $('input[name=mood]'); if (r) r.focus(); return; } const f = $(preName ? '#inClass' : '#inName'); if (f && !preCls && preName) f.focus(); else if ($('#inName')) $('#inName').focus(); }, 0);
 }
 function themeHtml() {
   if (G.cfg.allowTheme === false) return '';
@@ -1379,9 +1428,9 @@ async function submitResult(r) {
   const set = (cls, html) => { el.className = 'submit-status ' + cls; el.innerHTML = html; };
   set('wait', 'Đang gửi kết quả cho thầy/cô…');
   try {
-    const res = await fetch(G.cfg.endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action: 'submit' }, r)) });
+    const res = await fetch(G.cfg.endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action: 'submit' }, r, G.cfg.pin ? { pin: G.cfg.pin } : {})) });
     const j = await res.json();
-    if (j && j.ok) set('ok', '✓ Thầy/cô đã nhận được kết quả của em.'); else throw new Error('x');
+    if (j && j.ok) set('ok', '✓ Thầy/cô đã nhận được kết quả của em.'); else if (j && (j.error === 'pin' || j.error === 'locked')) { set('err', '✗ Mã đăng nhập chưa đúng nên chưa ghi điểm. Em bấm “Đổi tài khoản” ở trang chọn bài và đăng nhập lại nhé.'); return; } else throw new Error('x');
   } catch (e) { set('err', '✗ Chưa gửi được kết quả (kiểm tra mạng). <button class="btn btn-sm" data-act="resend">Gửi lại</button>'); }
 }
 
@@ -1406,6 +1455,185 @@ function toggleFS() {
 const TH = { keyOf, splitTag, THEMES, logoHtml, applyTheme, esc, shuffle, fmt, fmtTime, clock, toast, renderMath, imgCandidates, setBackground, slugify, lsGet, lsSet, Game: { run, stop }, onAct: null, $ };
 window.TH = TH;
 
+/* ---------- Cổng học sinh: lớp, lớp học, môn, chương, bài, lộ trình ---------- */
+const PTK = 'tuhbm_portal_v1', PGK = 'tuhbm_prog_v1';
+const PT = { items: null, lop: '', cls: '', mon: '', q: '', cur: null };
+const ptNorm = v => String(v == null ? '' : v).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/\s+/g, '').toLowerCase();
+const ptProg = () => { try { return JSON.parse(lsGet(PGK) || '{}') || {}; } catch (e) { return {}; } };
+const SK = 'tuhbm_sess_v1';
+let SESS = null;
+if (BOOT && BOOT.login) { try { SESS = JSON.parse(lsGet(SK) || 'null'); if (!SESS || !SESS.cls || !SESS.stt) SESS = null; } catch (e) { SESS = null; } }
+async function ptGet(q) {
+  const u = new URL(String(BOOT.endpoint).trim());
+  Object.keys(q).forEach(k => u.searchParams.set(k, q[k]));
+  const r = await fetch(u.toString());
+  return r.json();
+}
+const ptLopNum = v => { const n = parseInt(String(v).replace(/\D/g, ''), 10); return isNaN(n) ? 99 : n; };
+const ptGiao = i => Array.isArray(i.giao) ? i.giao : [];
+/* bài có hiện với lớp học của em không: không giao riêng thì cả khối thấy; giao riêng thì chỉ đúng lớp */
+const ptSeen = i => String(i.lop) === PT.lop && (!ptGiao(i).length || (PT.cls && PT.cls !== '*' && ptGiao(i).some(g => ptNorm(g.l) === ptNorm(PT.cls))));
+function ptHanOf(i) {
+  if (PT.cls && PT.cls !== '*') { const g = ptGiao(i).find(x => ptNorm(x.l) === ptNorm(PT.cls)); if (g && g.h) return g.h; }
+  return i.han;
+}
+function ptHan(h) {
+  if (!h) return '';
+  const d = typeof h === 'number' ? new Date(h) : (/^\d{4}-\d{2}-\d{2}$/.test(h) ? new Date(h + 'T23:59:00') : new Date(h));
+  if (isNaN(d)) return '<span class="pt-tag">Hạn: ' + esc(String(h)) + '</span>';
+  const days = Math.ceil((d.getTime() - Date.now()) / 864e5), p = n => String(n).padStart(2, '0');
+  const txt = p(d.getDate()) + '/' + p(d.getMonth() + 1);
+  if (days < 0) return '<span class="pt-tag late">Đã quá hạn ' + txt + '</span>';
+  if (days <= 2) return '<span class="pt-tag soon">⏰ Hạn ' + txt + (days === 0 ? ' (hôm nay)' : ' (còn ' + days + ' ngày)') + '</span>';
+  return '<span class="pt-tag">Hạn ' + txt + '</span>';
+}
+/* các bài cùng chương (cùng lớp, lớp học, môn) xếp theo thứ tự */
+const ptGroupOf = i => (PT.items || []).filter(x => ptSeen(x) && String(x.mon) === String(i.mon) && String(x.chuong || '') === String(i.chuong || '')).sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+function ptLock(i) {
+  if (!i.lotrinh) return null;
+  const g = ptGroupOf(i), k = g.findIndex(x => x.id === i.id);
+  for (let j = k - 1; j >= 0; j--) {
+    const pv = g[j], pr = ptProg()[pv.id], need = Number(i.dat) || 0;
+    if (!pr || pr.best < need) return { prev: pv, need: need, done: !!pr };
+    break;
+  }
+  return null;
+}
+function portalShell(inner) {
+  return '<main class="screen intro portal"><div class="panel intro-panel pt-panel"><p class="eyebrow">' + logoHtml('sm') + ' Cổng học bài</p>' +
+    '<h1>' + esc(BOOT.title || 'Cổng học bài') + '</h1>' + inner +
+    '<p class="credit">' + logoHtml('sm') + '<span>Thầy Vũ Tiến Lực · Trường THPT Nguyễn Hữu Cảnh</span></p></div></main>';
+}
+async function portalHome(force) {
+  setFit(false); stop();
+  document.documentElement.classList.remove('mode-board');
+  const saved = lsGet(TK); applyTheme(validTheme(saved) ? saved : (validTheme(BOOT.theme) ? BOOT.theme : 'auto'));
+  setBackground(BOOT.bg || ''); document.title = BOOT.title || 'Cổng học bài';
+  if (!PT.items || force) {
+    appEl().innerHTML = portalShell('<p class="lead" role="status">Đang tải danh sách bài…</p>');
+    try {
+      const j = await ptGet({ action: 'catalog' });
+      if (!j || !j.ok) throw new Error('x');
+      PT.items = j.items || [];
+      if (!PT.lop) { try { const sv = JSON.parse(lsGet(PTK) || '{}'); PT.lop = sv.lop || ''; PT.cls = sv.cls || ''; PT.mon = sv.mon || ''; } catch (e) { /* bỏ qua */ } }
+    } catch (e) {
+      appEl().innerHTML = portalShell('<p class="lead">Chưa tải được danh sách bài. Em kiểm tra mạng rồi thử lại nhé.</p><button class="btn btn-primary btn-lg" data-act="pt-retry">Thử lại</button>');
+      return;
+    }
+  }
+  if (SESS) await ptSync();
+  portalRender();
+}
+async function ptSync() {
+  try {
+    const j = await ptGet({ action: 'progress', cls: SESS.cls, stt: SESS.stt, pin: SESS.pin || '' });
+    if (!j || !j.ok) { if (j && (j.error === 'pin' || j.error === 'stt' || j.error === 'noclass')) { SESS = null; lsSet(SK, ''); } return; }
+    const pg = ptProg(), by = {}; Object.keys(j.best || {}).forEach(t => { by[ptNorm(t)] = j.best[t]; });
+    (PT.items || []).forEach(i => { const b = by[ptNorm(i.ten)]; if (b != null) { const o = pg[i.id]; pg[i.id] = { best: Math.max(o ? o.best : 0, b), at: o ? o.at : Date.now() }; } });
+    lsSet(PGK, JSON.stringify(pg));
+  } catch (e) { /* không có mạng thì dùng dữ liệu trên máy */ }
+}
+function ptLoginView(msg) {
+  appEl().innerHTML = portalShell('<h2 class="pt-h">Đăng nhập để học bài</h2><p class="lead">Em nhập lớp, số thứ tự và mã thầy đã phát.</p>' +
+    '<form id="ptLoginForm" novalidate class="pt-login"><label for="lgCls">Lớp</label><input type="text" id="lgCls" autocomplete="off" placeholder="10A1">' +
+    '<label for="lgStt">Số thứ tự</label><input type="text" id="lgStt" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="Số">' +
+    '<label for="lgPin">Mã đăng nhập</label><input type="password" id="lgPin" inputmode="numeric" autocomplete="off" placeholder="Mã (nếu thầy có cho)">' +
+    '<div class="err" id="lgErr" role="alert">' + esc(msg || '') + '</div><button class="btn btn-primary btn-lg" type="submit">Vào học</button></form>');
+  const f = $('#lgCls'); if (f) f.focus();
+}
+async function ptLogin() {
+  const cls = $('#lgCls').value.trim(), stt = $('#lgStt').value.trim(), pin = $('#lgPin').value.trim(), er = $('#lgErr');
+  if (!cls || !/^\d{1,3}$/.test(stt)) { er.textContent = 'Em hãy nhập lớp và số thứ tự (chỉ gồm số).'; return; }
+  er.textContent = 'Đang kiểm tra…';
+  try {
+    const j = await ptGet({ action: 'login', cls, stt, pin });
+    if (!j || !j.ok) {
+      const m = { noclass: 'Chưa thấy lớp này trong danh sách. Em kiểm tra tên lớp hoặc hỏi thầy nhé.', stt: 'Lớp này không có số thứ tự đó.', pin: 'Mã chưa đúng, em nhập lại nhé.', locked: 'Em nhập sai nhiều lần. Hãy chờ khoảng 10 phút rồi thử lại.' };
+      er.textContent = m[j && j.error] || 'Chưa đăng nhập được. Em thử lại nhé.'; return;
+    }
+    SESS = { cls: j.cls, stt: j.stt, name: j.name, pin }; lsSet(SK, JSON.stringify(SESS));
+    appEl().innerHTML = portalShell('<p class="lead" role="status">Đang tải bài của em…</p>');
+    await ptSync(); portalRender();
+  } catch (e) { er.textContent = 'Chưa kết nối được. Em kiểm tra mạng rồi thử lại.'; }
+}
+function ptLogout() { SESS = null; lsSet(SK, ''); PT.lop = ''; PT.cls = ''; PT.mon = ''; portalRender(); }
+function portalRender() {
+  if (BOOT.login && !SESS) { ptLoginView(); return; }
+  const items = PT.items || [];
+  if (!items.length) { appEl().innerHTML = portalShell('<p class="lead">Thầy chưa đăng bài nào. Em quay lại sau nhé!</p><button class="btn" data-act="pt-retry">Tải lại</button>'); return; }
+  const lops = [...new Set(items.map(i => String(i.lop)))].sort((a, b) => ptLopNum(a) - ptLopNum(b));
+  if (SESS) PT.lop = (String(SESS.cls).match(/^\d+/) || [''])[0];
+  else if (!lops.includes(PT.lop)) { PT.lop = lops.length === 1 ? lops[0] : ''; PT.cls = ''; PT.mon = ''; }
+  const clss = PT.lop ? [...new Set(items.filter(i => String(i.lop) === PT.lop).flatMap(i => ptGiao(i).map(g => String(g.l))))].sort((a, b) => a.localeCompare(b, 'vi', { numeric: true })) : [];
+  if (SESS) PT.cls = clss.find(c => ptNorm(c) === ptNorm(SESS.cls)) || '*';
+  else if (PT.cls && PT.cls !== '*' && !clss.some(c => ptNorm(c) === ptNorm(PT.cls))) PT.cls = '';
+  const needCls = !!PT.lop && clss.length > 0, clsOk = !needCls || !!PT.cls;
+  const mons = (PT.lop && clsOk) ? [...new Set(items.filter(ptSeen).map(i => String(i.mon)))].sort() : [];
+  if (!mons.includes(PT.mon)) PT.mon = mons.length === 1 ? mons[0] : '';
+  const chip = (act, val, label, on) => '<button type="button" class="pt-chip' + (on ? ' on' : '') + '" data-act="' + act + '" data-v="' + esc(val) + '" aria-pressed="' + on + '">' + esc(label) + '</button>';
+  let n = 1, h = SESS ? '<div class="pt-me">👋 Xin chào <b>' + esc(SESS.name) + '</b> · Lớp ' + esc(SESS.cls) + ' · STT ' + esc(SESS.stt) + ' <button type="button" class="btn btn-ghost btn-sm" data-act="pt-logout">Đổi tài khoản</button></div>' : '<h2 class="pt-h">' + (n++) + '. Em học lớp mấy?</h2><div class="pt-chips">' + lops.map(l => chip('pt-lop', l, /^\d+$/.test(l) ? 'Lớp ' + l : l, l === PT.lop)).join('') + '</div>';
+  if (needCls && !SESS) h += '<h2 class="pt-h">' + (n++) + '. Lớp học của em</h2><div class="pt-chips">' + clss.map(c => chip('pt-cls', c, c, ptNorm(c) === ptNorm(PT.cls))).join('') + chip('pt-cls', '*', 'Lớp khác', PT.cls === '*') + '</div>';
+  if (PT.lop && clsOk) h += '<h2 class="pt-h">' + (n++) + '. Chọn môn</h2>' + (mons.length ? '<div class="pt-chips">' + mons.map(m => chip('pt-mon', m, m, m === PT.mon)).join('') + '</div>' : '<p class="pt-empty">Lớp này chưa có bài nào.</p>');
+  if (PT.lop && clsOk && PT.mon) {
+    const q = PT.q.trim().toLowerCase(), prog = ptProg();
+    const all = items.filter(i => ptSeen(i) && String(i.mon) === PT.mon);
+    const list = all.filter(i => !q || String(i.ten).toLowerCase().includes(q));
+    const groups = {};
+    list.forEach(i => { const k = String(i.chuong || ''); (groups[k] = groups[k] || []).push(i); });
+    const keys = Object.keys(groups).sort((a, b) => Math.min(...groups[a].map(x => Number(x.order) || 0)) - Math.min(...groups[b].map(x => Number(x.order) || 0)));
+    h += '<h2 class="pt-h">' + (n++) + '. Chọn bài để làm</h2>' + (all.length > 6 ? '<input type="search" id="ptSearch" class="pt-search" placeholder="Tìm tên bài…" value="' + esc(PT.q) + '" aria-label="Tìm bài">' : '');
+    if (!list.length) h += '<ul class="pt-list"><li class="pt-empty">Không có bài nào khớp.</li></ul>';
+    keys.forEach(k => {
+      const g = groups[k].sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0)), full = ptGroupOf(g[0]);
+      const done = full.filter(x => prog[x.id]).length;
+      const nextId = (full.find(x => !prog[x.id] && !ptLock(x)) || {}).id;
+      h += '<section class="pt-grp"><h3 class="pt-gh">' + esc(k || 'Bài học') + (full.length > 1 ? ' <span class="pt-gp">' + done + '/' + full.length + ' bài</span>' : '') + '</h3>' +
+        (full.length > 1 ? '<div class="pt-bar" aria-hidden="true"><i style="width:' + Math.round(100 * done / full.length) + '%"></i></div>' : '') + '<ul class="pt-list">' +
+        g.map(i => {
+          const lk = ptLock(i), pr = prog[i.id];
+          const meta = (i.n ? i.n + ' câu ' : '') + (pr ? '<span class="pt-tag ok">✓ Đã làm, cao nhất ' + String(pr.best).replace('.', ',') + ' điểm</span>' : '') + ptHan(ptHanOf(i)) +
+            (lk ? '<span class="pt-tag lock">🔒 ' + (lk.done ? 'Đạt từ ' + lk.need + ' điểm ở' : 'Hoàn thành') + ' bài “' + esc(lk.prev.ten) + '” để mở</span>' : (i.id === nextId ? '<span class="pt-tag next">★ Nên làm tiếp</span>' : ''));
+          return '<li><button type="button" class="pt-lesson' + (lk ? ' locked' : '') + (i.id === nextId ? ' next' : '') + '" data-act="pt-go" data-id="' + esc(i.id) + '"' + (lk ? ' aria-disabled="true"' : '') + '><span class="pt-name">' + esc(i.ten) + '</span><span class="pt-meta">' + meta + '</span><span class="pt-go" aria-hidden="true">' + (lk ? '🔒' : (pr ? 'Làm lại ▶' : 'Làm bài ▶')) + '</span></button></li>';
+        }).join('') + '</ul></section>';
+    });
+  }
+  appEl().innerHTML = portalShell(h);
+  const sb = $('#ptSearch'); if (sb) sb.addEventListener('input', () => { PT.q = sb.value; const pos = sb.selectionStart; portalRender(); const nn = $('#ptSearch'); if (nn) { nn.focus(); nn.setSelectionRange(pos, pos); } });
+}
+function ptNextHtml(cur, result) {
+  const g = ptGroupOf(cur), k = g.findIndex(x => x.id === cur.id), nx = g[k + 1];
+  let h = '<div class="sum-actions pt-next-box" style="margin-top:1rem">';
+  if (nx) {
+    const lk = ptLock(nx);
+    if (lk) h += '<p class="pt-note">🔒 Em cần đạt từ <b>' + lk.need + ' điểm</b> ở bài này để mở bài tiếp theo “' + esc(nx.ten) + '”. Em bấm <b>Làm lại</b> để cải thiện nhé!</p>';
+    else h += '<button class="btn btn-primary btn-lg" data-act="pt-go" data-id="' + esc(nx.id) + '">▶ Bài tiếp theo: ' + esc(nx.ten) + '</button>';
+  } else if (g.length > 1) h += '<p class="pt-note">🎉 Em đã đến bài cuối của chương này!</p>';
+  return h + '<button class="btn btn-ghost" data-act="pt-back">⬅ Chọn bài khác</button></div>';
+}
+async function portalGo(id) {
+  const cur = (PT.items || []).find(x => x.id === id);
+  const lk = cur && ptLock(cur);
+  if (lk) { toast('Bài này sẽ mở sau khi em ' + (lk.done ? 'đạt từ ' + lk.need + ' điểm ở' : 'hoàn thành') + ' bài “' + lk.prev.ten + '”.'); return; }
+  const btn = document.querySelector('.pt-lesson[data-id="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+  if (btn) { btn.disabled = true; btn.querySelector('.pt-go').textContent = 'Đang mở…'; }
+  try {
+    const j = await ptGet({ action: 'lesson', id: id });
+    if (!j || !j.ok || !j.boot || !j.boot.qa) throw new Error('x');
+    const b = j.boot;
+    try { lsSet(PTK, JSON.stringify({ lop: PT.lop, cls: PT.cls, mon: PT.mon })); } catch (e) { /* bỏ qua */ }
+    document.title = b.title || 'Làm bài'; setBackground(b.bg || BOOT.bg || '');
+    run({ title: (cur && cur.ten) || b.title, qa: b.qa, pick: b.pick, board: false, theme: b.theme || BOOT.theme, allowTheme: b.allowTheme !== false && BOOT.allowTheme !== false, remember: true, profile: true, vd: b.vd || [], endpoint: BOOT.endpoint || '',
+      prefillClass: (PT.cls && PT.cls !== '*') ? PT.cls : '',
+      fixed: SESS ? { name: SESS.name, cls: SESS.cls, stt: SESS.stt } : null, pin: SESS ? (SESS.pin || '') : '',
+      onFinish: r => { const pg = ptProg(), o = pg[id]; pg[id] = { best: Math.max(o ? o.best : 0, r.score), at: Date.now() }; lsSet(PGK, JSON.stringify(pg)); },
+      summaryExtra: r => cur ? ptNextHtml(cur, r) : '<div class="sum-actions" style="margin-top:1rem"><button class="btn btn-ghost" data-act="pt-back">⬅ Chọn bài khác</button></div>' });
+  } catch (e) {
+    toast('Chưa mở được bài này. Em kiểm tra mạng rồi thử lại nhé.');
+    if (btn) { btn.disabled = false; btn.querySelector('.pt-go').textContent = 'Làm bài ▶'; }
+  }
+}
+
+document.addEventListener('submit', e => { if (e.target.id === 'ptLoginForm') { e.preventDefault(); ptLogin(); } });
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el || el.disabled) return;
@@ -1416,6 +1644,13 @@ document.addEventListener('click', e => {
   else if (act === 'copy') copyResult();
   else if (act === 'go') goFromWarmup();
   else if (act === 'resend') { if (G.last) submitResult(G.last); }
+  else if (act === 'pt-retry') portalHome(true);
+  else if (act === 'pt-back') portalHome(false);
+  else if (act === 'pt-lop') { PT.lop = el.dataset.v; PT.cls = ''; PT.mon = ''; PT.q = ''; portalRender(); }
+  else if (act === 'pt-cls') { PT.cls = el.dataset.v; PT.mon = ''; PT.q = ''; portalRender(); }
+  else if (act === 'pt-mon') { PT.mon = el.dataset.v; PT.q = ''; portalRender(); }
+  else if (act === 'pt-go') portalGo(el.dataset.id);
+  else if (act === 'pt-logout') ptLogout();
   else if (TH.onAct) TH.onAct(act, el, e);
 });
 
@@ -1424,6 +1659,7 @@ if (BOOT && BOOT.mode === 'student') {
   setBackground(BOOT.bg || '');
   run({ title: BOOT.title, qa: BOOT.qa, pick: BOOT.pick, board: false, theme: BOOT.theme, allowTheme: BOOT.allowTheme !== false, remember: true, profile: true, vd: BOOT.vd || [], endpoint: BOOT.endpoint || '' });
 }
+if (BOOT && BOOT.mode === 'portal') portalHome(true);
 })();
 </script>
 <script id="js-teacher">
@@ -1745,7 +1981,7 @@ function renderHome() {
     '<header class="hm-top"><div class="hm-brand">' + TH.logoHtml('lg') + '<div><p class="eyebrow">Giáo viên · Thầy Vũ Tiến Lực · THPT Nguyễn Hữu Cảnh</p><h1 class="hm-title">Ứng dụng lớp học đảo ngược</h1>' +
     '<p class="hm-lead">Học sinh tự đọc SGK và chơi kéo thả ở nhà. Thầy xem kết quả rồi dạy đúng chỗ lớp còn nhầm.</p></div></div>' +
     '<div class="hm-top-btns"><button class="btn btn-primary btn-sm" data-act="hm-open" data-p="pan0">💡 Giới thiệu và mẹo dạy học</button><button class="btn btn-ghost btn-sm" data-act="clear">Xóa dữ liệu đã lưu</button>' +
-    '<details class="hm-menu"><summary aria-label="Trang web của thầy" title="Trang web của thầy">⋯</summary><div class="hm-menu-list" role="menu"><span class="hm-menu-h">Trang web của thầy</span><a role="menuitem" href="https://k12scorm-3kj9.vercel.app/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">🔗</span>K12 SCORM<small>k12scorm-3kj9.vercel.app</small></a></div></details></div></header>' +
+    '<details class="hm-menu"><summary aria-label="Trang web của thầy" title="Trang web của thầy">⋯</summary><div class="hm-menu-list" role="menu"><span class="hm-menu-h">Trang web của thầy</span><a role="menuitem" href="https://k12scorm-3kj9.vercel.app/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">🔗</span>K12 SCORM<small>k12scorm-3kj9.vercel.app</small></a><button type="button" role="menuitem" data-act="logout"><span aria-hidden="true">🚪</span>Đăng xuất<small>Lần sau sẽ hỏi lại mã</small></button></div></details></div></header>' +
     '<p class="hm-step">Bấm từng mục để mở và thiết lập</p>' +
     '<div class="hm-tiles">' +
     hmTile('pan1', '📝', 'Bài học và câu hỏi', 'Excel hoặc Google Sheet, vòng Vận dụng') +
@@ -1757,6 +1993,7 @@ function renderHome() {
     '<button class="act-card" id="actExport" data-act="export-open"><b>Tạo file HTML cho học sinh</b><span>Chọn ảnh nền (nếu muốn), rồi tải file.</span></button>' +
     '<button class="act-card" id="actBoard" data-act="board"><b>Giảng bài trên lớp</b><span>Học sinh lên bảng, rồi trình chiếu hình.</span></button>' +
     '<button class="act-card" data-act="notice-open"><b>📣 Gửi thông báo cho học sinh</b><span>Nhắc học bài, hạn chót, quà bí mật.</span></button>' +
+    '<button class="act-card" data-act="board3"' + (endpointOk() ? '' : ' disabled') + '><b>🏆 Bảng điểm cả lớp</b><span>' + (endpointOk() ? 'Ai chưa làm, nộp trễ, câu hay sai, xuất Excel.' : 'Cần kết nối Google Sheet (mục 4).') + '</span></button>' +
     '<button class="act-card" data-act="dash"' + (endpointOk() ? '' : ' disabled') + '><b>Xem kết quả cả lớp</b><span>' + (endpointOk() ? 'Câu hay nhầm, điểm từng em.' : 'Cần kết nối Google Sheet (mục 4).') + '</span></button>' +
     '</div><p class="hint hm-hint" id="actHint"></p>' +
     hmPan('pan0', introHtml()) +
@@ -1795,7 +2032,7 @@ function renderHome() {
       '<label for="xLibSel">Hoặc chọn từ thư viện link ảnh đã lưu</label><select id="xLibSel"></select>' +
       '<label class="opt"><input type="checkbox" id="xNoBg"> Không dùng ảnh nền (học sinh thấy nền màu trơn)</label>' +
       '<p class="hint">Để trống: dùng hình nền chung ở mục “Hình nền và giao diện” (nếu có). Nên chọn ảnh sáng, ít chi tiết để chữ dễ đọc. Ảnh nằm sau các khung câu hỏi, không che nội dung.</p>' +
-      '<div class="lec-run"><button class="btn btn-primary btn-lg" data-act="export">⬇ Tải file cho học sinh</button></div></section>') +
+      '<div class="lec-run"><button class="btn btn-primary btn-lg" data-act="export">⬇ Tải file cho học sinh</button></div>' + portalCardHtml() + '</section>') +
     hmPan('pan6', noticeHtml()) +
     hmPan('pan3', imagesCardHtml(3, false) + musicCardHtml()) + hmPan('pan4', gasCardHtml()) +
     '</main>';
@@ -1916,11 +2153,185 @@ function noticeHtml() {
     '<div class="row nt-btns"><button class="btn" data-act="nt-quote">🎲 Đổi câu khích lệ</button><button class="btn" data-act="nt-style">🎨 Đổi phong cách</button><button class="btn btn-primary" data-act="nt-copy">📋 Sao chép</button></div></section>';
 }
 
+/* ---------- Đăng bài lên cổng học sinh ---------- */
+const PT_MON = ['Toán', 'Ngữ văn', 'Tiếng Việt', 'Tiếng Anh', 'Khoa học tự nhiên', 'Vật lí', 'Hóa học', 'Sinh học', 'Lịch sử', 'Địa lí', 'Giáo dục công dân', 'Tin học', 'Công nghệ'];
+let ptGiao = [], ptCat = [];
+function portalCardHtml() {
+  const t = state.pt || {};
+  return '<hr class="pt-sep"><h2 style="margin-top:1.2rem">🌐 Cổng học sinh (đăng lên Google Sheet)</h2>' +
+    '<p class="hint" style="margin-top:0">Đăng bài này lên cổng: học sinh mở một đường link duy nhất, chọn lớp, môn, bài là làm được, điểm tự về Google Sheet. Bài mới đăng xong là hiện ngay, không cần gửi lại file.</p>' +
+    '<div class="nt-grid"><div><label for="ptLop">Khối lớp</label><select id="ptLop">' + Array.from({ length: 12 }, (_, i) => '<option value="' + (i + 1) + '">Lớp ' + (i + 1) + '</option>').join('') + '</select></div>' +
+    '<div><label for="ptMon">Môn</label><input type="text" id="ptMon" list="ptMonList" value="' + esc(t.mon || 'Toán') + '"><datalist id="ptMonList">' + PT_MON.map(m => '<option value="' + m + '">').join('') + '</datalist></div></div>' +
+    '<label for="ptTen">Tên bài hiển thị cho học sinh</label><input type="text" id="ptTen" value="' + esc(state.title || '') + '" placeholder="Ví dụ: Bài 15. Hàm số bậc hai">' +
+    '<div class="nt-grid"><div><label for="ptCh">Chương <small class="opt">(không bắt buộc)</small></label><input type="text" id="ptCh" list="ptChList" value="' + esc(t.chuong || '') + '" placeholder="Ví dụ: Chương 6. Hàm số bậc hai"><datalist id="ptChList"></datalist></div>' +
+    '<div><label for="ptOrd">Thứ tự trong chương</label><input type="number" id="ptOrd" min="1" value="' + esc(t.order || 1) + '"></div></div>' +
+    '<label class="opt"><input type="checkbox" id="ptLt"> 🔒 Lộ trình: bài này chỉ mở sau khi học sinh làm xong bài đứng trước trong cùng chương</label>' +
+    '<div id="ptDatBox"><label for="ptDat">Điểm cần đạt ở bài đứng trước để mở bài này <small class="opt">(0 = chỉ cần làm xong)</small></label><input type="number" id="ptDat" min="0" max="10" step="0.5" value="' + esc(t.dat != null ? t.dat : 5) + '"></div>' +
+    '<fieldset class="nt-gifts"><legend>👥 Giao cho lớp học cụ thể <small class="opt">(để trống: cả khối đều thấy)</small></legend><div id="ptGiaoBox"></div>' +
+    '<div class="row" style="gap:.5rem;flex-wrap:wrap"><button type="button" class="btn btn-sm" data-act="pt-gadd">＋ Thêm lớp học</button><span class="hint" style="margin:0">Mỗi lớp có hạn riêng. Lớp không ghi hạn dùng hạn chung bên dưới.</span></div></fieldset>' +
+    '<label for="ptHan">Hạn chót chung <small class="opt">(không bắt buộc)</small></label><input type="date" id="ptHan" value="' + esc(t.han || '') + '">' +
+    '<div class="lec-run" style="gap:.5rem;flex-wrap:wrap"><button class="btn btn-primary btn-lg" data-act="pt-send">☁ Đăng bài lên cổng</button><button class="btn" data-act="pt-assign">💾 Chỉ cập nhật giao bài</button><button class="btn" data-act="pt-list">📚 Xem bài đã đăng</button><button class="btn" data-act="pt-portal">⬇ Tải trang cổng học sinh</button></div>' +
+    '<label class="opt"><input type="checkbox" id="ptLogin"' + (state.ptLogin ? ' checked' : '') + '> 🔑 Bắt buộc học sinh đăng nhập (lớp + số thứ tự + mã) khi mở cổng, áp dụng cho file cổng tải về</label>' +
+    '<div id="ptStatus" role="status"></div><div id="ptListBox"></div>' +
+    '<hr class="pt-sep"><h2 style="margin-top:1.2rem">👥 Danh sách lớp và mã đăng nhập</h2>' +
+    '<p class="hint" style="margin-top:0">Nhập danh sách một lần: học sinh vào cổng chỉ cần gõ lớp, số thứ tự và mã, tên tự hiện đúng, điểm ghi đúng người và tiến độ học đi theo em trên mọi thiết bị.</p>' +
+    '<label for="rsCls">Lớp học</label><input type="text" id="rsCls" list="ptRos" value="' + esc(state.rsCls || '') + '" placeholder="Ví dụ: 10A1" autocomplete="off">' +
+    '<label for="rsList">Danh sách (mỗi dòng một em, thứ tự dòng là số thứ tự; muốn tự đặt mã thì viết: Họ tên | mã)</label>' +
+    '<textarea id="rsList" rows="8" placeholder="Nguyễn Văn An&#10;Trần Thị Bình | 4821"></textarea>' +
+    '<label class="opt"><input type="checkbox" id="rsPin" checked> Tự tạo mã 4 số cho em chưa có mã</label>' +
+    '<div class="lec-run" style="gap:.5rem;flex-wrap:wrap"><button class="btn btn-primary" data-act="rs-send">⬆ Gửi danh sách lên Google Sheet</button><button class="btn" data-act="rs-load">⬇ Lấy danh sách đang có</button><button class="btn" data-act="rs-copy">📋 Chép bảng mã để phát cho lớp</button></div>' +
+    '<div id="rsStatus" role="status"></div>' +
+    '<p class="hint">Cần kết nối Apps Script ở mục 4 (mã mới). Đăng lại cùng khối, môn, tên bài thì bài cũ được thay. “Chỉ cập nhật giao bài” đổi chương, lộ trình, lớp học và hạn mà không đăng lại nội dung câu hỏi. Lộ trình dựa trên tiến độ lưu trên máy học sinh, nếu em đổi máy thì phải làm lại từ bài đầu.</p>';
+}
+function ptGiaoPaint() {
+  const box = $('#ptGiaoBox'); if (!box) return;
+  const ros = Object.keys(state.rosters || {});
+  box.innerHTML = (ptGiao.length ? ptGiao.map((g, i) => '<div class="pt-grow"><input type="text" data-gi="' + i + '" data-gk="l" list="ptRos" value="' + esc(g.l) + '" placeholder="Lớp học, ví dụ 10A1" aria-label="Lớp học"><input type="date" data-gi="' + i + '" data-gk="h" value="' + esc(g.h || '') + '" aria-label="Hạn riêng"><button type="button" class="btn btn-sm" data-act="pt-gdel" data-i="' + i + '" aria-label="Bỏ lớp này">✕</button></div>').join('') : '<p class="hint" style="margin:.2rem 0">Chưa giao riêng: cả khối thấy bài này.</p>') +
+    '<datalist id="ptRos">' + ros.map(r => '<option value="' + esc(r) + '">').join('') + '</datalist>';
+}
+function ptChPaint() {
+  const dl = $('#ptChList'); if (!dl) return;
+  const set = new Set(ptCat.map(i => i.chuong).filter(Boolean)); if (state.pt && state.pt.chuong) set.add(state.pt.chuong);
+  dl.innerHTML = [...set].map(c => '<option value="' + esc(c) + '">').join('');
+}
+function ptFill() {
+  const t = state.pt || {};
+  $('#ptLop').value = t.lop || '10'; $('#ptTen').value = state.title || ''; $('#ptCh').value = t.chuong || ''; $('#ptOrd').value = t.order || 1;
+  $('#ptLt').checked = !!t.lotrinh; $('#ptDat').value = t.dat != null ? t.dat : 5; $('#ptHan').value = t.han || ''; $('#ptMon').value = t.mon || 'Toán';
+  ptGiao = (t.giao || []).map(g => ({ l: g.l, h: g.h || '' })); ptGiaoPaint(); ptChPaint(); $('#ptDatBox').hidden = !$('#ptLt').checked;
+}
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.gi !== undefined) { const g = ptGiao[+t.dataset.gi]; if (g) g[t.dataset.gk] = t.value; }
+});
+document.addEventListener('change', e => { if (e.target.id === 'ptLt') $('#ptDatBox').hidden = !e.target.checked; });
+function ptSt(cls, html) { const e = $('#ptStatus'); if (e) e.innerHTML = '<p class="status ' + cls + '" role="' + (cls === 'err' ? 'alert' : 'status') + '">' + html + '</p>'; }
+const ptId = (lop, mon, ten) => (lop + '-' + (slugify(mon) || 'mon') + '-' + (slugify(ten) || 'bai')).slice(0, 80);
+async function gasPost(body) {
+  const r = await fetch(String(state.endpoint).trim(), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+  return r.json();
+}
+function ptNeed() {
+  if (!endpointOk() || !state.gkey) { ptSt('err', 'Chưa kết nối Google Sheet. Hãy điền link Apps Script và mật khẩu ở mục 4 “Thu kết quả về Google Sheet”.'); return false; }
+  return true;
+}
+function ptRead() {
+  const lop = $('#ptLop').value, mon = $('#ptMon').value.trim(), ten = $('#ptTen').value.trim(), han = $('#ptHan').value, order = +$('#ptOrd').value || 1;
+  const chuong = $('#ptCh').value.trim(), lotrinh = $('#ptLt').checked ? 1 : 0, dat = Math.min(10, Math.max(0, +$('#ptDat').value || 0));
+  const giao = ptGiao.map(g => ({ l: String(g.l || '').trim(), h: g.h || '' })).filter(g => g.l);
+  const seen = new Set(), dup = giao.find(g => { const k = g.l.toLowerCase().replace(/\s+/g, ''); if (seen.has(k)) return true; seen.add(k); return false; });
+  return { lop, mon, ten, han, order, chuong, lotrinh, dat, giao, dup };
+}
+function ptErr(j) {
+  return j && j.error === 'key' ? 'Mật khẩu không khớp với KEY trong Apps Script.' : j && j.error === 'size' ? 'Bài quá lớn (hơn khoảng 900 nghìn ký tự). Hãy tách thành hai bài.' :
+    j && j.error === 'none' ? 'Bài này chưa được đăng. Hãy bấm “Đăng bài lên cổng” trước.' :
+    j && j.error === 'action' ? 'Apps Script đang dùng mã cũ. Hãy dán mã mới ở mục 4 rồi triển khai lại (Quản lý triển khai → Chỉnh sửa → Phiên bản mới).' : 'Không thực hiện được (' + esc(String(j && j.error)) + ').';
+}
+async function portalSend() {
+  if (state.qa.length < 4) { ptSt('err', 'Cần ít nhất 4 cặp câu hỏi – đáp án.'); return; }
+  if (!ptNeed()) return;
+  const m = ptRead();
+  if (!m.mon || !m.ten) { ptSt('err', 'Hãy điền môn và tên bài.'); return; }
+  if (m.dup) { ptSt('err', 'Lớp học “' + esc(m.dup.l) + '” bị ghi hai lần.'); return; }
+  state.pt = { lop: m.lop, mon: m.mon, han: m.han, order: m.order, chuong: m.chuong, lotrinh: m.lotrinh, dat: m.dat, giao: m.giao }; save();
+  const boot = { title: m.ten, qa: state.qa, vd: state.vd, pick: state.pick, theme: state.theme, allowTheme: !!state.allowTheme, bg: state.noSbg ? '' : (state.sbg || state.bg) };
+  ptSt('empty', 'Đang đăng bài…');
+  try {
+    const j = await gasPost({ action: 'publish', key: state.gkey, id: ptId(m.lop, m.mon, m.ten), lop: m.lop, mon: m.mon, ten: m.ten, han: m.han, order: m.order, chuong: m.chuong, lotrinh: m.lotrinh, dat: m.dat, giao: m.giao, boot });
+    if (j && j.ok) ptSt('ok', '✓ Đã đăng “' + esc(m.ten) + '” (Lớp ' + esc(m.lop) + ', ' + esc(m.mon) + (m.giao.length ? ', giao ' + m.giao.length + ' lớp học' : ', cả khối') + ').');
+    else ptSt('err', ptErr(j));
+  } catch (e) { ptSt('err', 'Không kết nối được Apps Script. Kiểm tra link, quyền “Bất kỳ ai” và mạng.'); }
+}
+async function portalAssign() {
+  if (!ptNeed()) return;
+  const m = ptRead();
+  if (!m.mon || !m.ten) { ptSt('err', 'Hãy điền khối, môn và tên bài của bài đã đăng.'); return; }
+  if (m.dup) { ptSt('err', 'Lớp học “' + esc(m.dup.l) + '” bị ghi hai lần.'); return; }
+  ptSt('empty', 'Đang cập nhật…');
+  try {
+    const j = await gasPost({ action: 'assign', key: state.gkey, id: ptId(m.lop, m.mon, m.ten), han: m.han, order: m.order, chuong: m.chuong, lotrinh: m.lotrinh, dat: m.dat, giao: m.giao });
+    if (j && j.ok) { ptSt('ok', '✓ Đã cập nhật giao bài cho “' + esc(m.ten) + '” (không đăng lại nội dung).'); if ($('#ptListBox').innerHTML) portalList(); } else ptSt('err', ptErr(j));
+  } catch (e) { ptSt('err', 'Không kết nối được Apps Script.'); }
+}
+const ptDateStr = h => { if (!h) return ''; if (typeof h === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(h)) return h; const d = new Date(h); if (isNaN(d)) return ''; const p = n => String(n).padStart(2, '0'); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
+async function portalList() {
+  if (!endpointOk()) { ptSt('err', 'Chưa kết nối Google Sheet ở mục 4.'); return; }
+  const box = $('#ptListBox'); box.innerHTML = '<p class="hint">Đang tải…</p>';
+  try {
+    const j = await gasGet({ action: 'catalog' });
+    if (!j || !j.ok) throw new Error('x');
+    ptCat = j.items; ptChPaint();
+    if (!j.items.length) { box.innerHTML = '<p class="hint">Chưa có bài nào được đăng.</p>'; return; }
+    box.innerHTML = '<ul class="pt-adm">' + j.items.sort((a, b) => (+a.lop || 99) - (+b.lop || 99) || String(a.mon).localeCompare(String(b.mon)) || String(a.chuong || '').localeCompare(String(b.chuong || '')) || a.order - b.order).map(i =>
+      '<li><span>Lớp ' + esc(i.lop) + ' · ' + esc(i.mon) + (i.chuong ? ' · <i>' + esc(i.chuong) + '</i>' : '') + ' · <b>' + esc(i.ten) + '</b> <small>(' + i.n + ' câu' + (i.lotrinh ? ', 🔒 lộ trình' : '') + ') · ' + (i.giao && i.giao.length ? 'giao: ' + esc(i.giao.map(g => g.l + (g.h ? ' (' + g.h.slice(8) + '/' + g.h.slice(5, 7) + ')' : '')).join(', ')) : 'cả khối') + '</small></span>' +
+      '<span class="pt-ab"><button class="btn btn-sm" data-act="pt-edit" data-id="' + esc(i.id) + '" aria-label="Sửa giao bài ' + esc(i.ten) + '">✎ Sửa</button><button class="btn btn-sm" data-act="pt-del" data-id="' + esc(i.id) + '" aria-label="Gỡ bài ' + esc(i.ten) + '">✕ Gỡ</button></span></li>').join('') + '</ul>';
+  } catch (e) { box.innerHTML = '<p class="status err">Không tải được danh sách. Kiểm tra kết nối Apps Script (mã mới) ở mục 4.</p>'; }
+}
+function portalEdit(id) {
+  const i = ptCat.find(x => x.id === id); if (!i) return;
+  $('#ptLop').value = String(i.lop); $('#ptMon').value = i.mon; $('#ptTen').value = i.ten; $('#ptCh').value = i.chuong || ''; $('#ptOrd').value = i.order || 1;
+  $('#ptLt').checked = !!i.lotrinh; $('#ptDat').value = i.dat != null ? i.dat : 5; $('#ptHan').value = ptDateStr(i.han); $('#ptDatBox').hidden = !i.lotrinh;
+  ptGiao = (i.giao || []).map(g => ({ l: g.l, h: g.h || '' })); ptGiaoPaint();
+  ptSt('ok', 'Đã nạp “' + esc(i.ten) + '” vào form. Sửa rồi bấm <b>Chỉ cập nhật giao bài</b> (giữ nguyên câu hỏi).');
+  $('#ptTen').scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+async function portalDel(id) {
+  if (!ptNeed() || !confirm('Gỡ bài này khỏi cổng? Điểm học sinh đã nộp vẫn còn trong sheet KetQua.')) return;
+  try { const j = await gasPost({ action: 'unpublish', key: state.gkey, id }); if (j && j.ok) { toast('Đã gỡ bài.'); portalList(); } else ptSt('err', 'Không gỡ được (sai mật khẩu hoặc mã cũ).'); }
+  catch (e) { ptSt('err', 'Không kết nối được Apps Script.'); }
+}
+const rsSt = (c, h) => { const e = $('#rsStatus'); if (e) e.innerHTML = '<p class="status ' + c + '" role="' + (c === 'err' ? 'alert' : 'status') + '">' + h + '</p>'; };
+function rsParse() {
+  const cls = $('#rsCls').value.trim(); if (!cls) { rsSt('err', 'Hãy nhập tên lớp học, ví dụ 10A1.'); return null; }
+  const auto = $('#rsPin').checked, used = new Set();
+  const lines = $('#rsList').value.split(/\n/).map(s => s.trim()).filter(Boolean).map(s => { const k = s.lastIndexOf('|'); return k < 0 ? { name: s, pin: '' } : { name: s.slice(0, k).trim(), pin: s.slice(k + 1).trim() }; }).filter(x => x.name);
+  if (!lines.length) { rsSt('err', 'Hãy dán danh sách học sinh.'); return null; }
+  lines.forEach(x => { if (x.pin) used.add(x.pin); });
+  lines.forEach((x, i) => { x.stt = i + 1; if (!x.pin && auto) { let p; do { p = String(1000 + Math.floor(Math.random() * 9000)); } while (used.has(p)); used.add(p); x.pin = p; } });
+  $('#rsList').value = lines.map(x => x.name + (x.pin ? ' | ' + x.pin : '')).join('\n');
+  state.rsCls = cls; save();
+  return { cls, list: lines };
+}
+async function rsSend() {
+  if (!ptNeed()) return; const r = rsParse(); if (!r) return;
+  rsSt('wait', 'Đang gửi danh sách…');
+  try {
+    const j = await gasPost({ action: 'roster', key: state.gkey, cls: r.cls, list: r.list });
+    if (!j || !j.ok) throw new Error(j && j.error === 'key' ? 'key' : 'x');
+    state.rosters[norm(r.cls)] = r.list.map(x => x.name).join('\n'); save();
+    rsSt('ok', '✓ Đã lưu ' + j.n + ' em của lớp ' + esc(r.cls) + ' vào sheet “HocSinh”. Bấm “Chép bảng mã” để phát mã cho lớp.');
+  } catch (e) { rsSt('err', e.message === 'key' ? 'Mật khẩu chưa khớp KEY trong Apps Script.' : 'Chưa gửi được. Hãy dán mã Apps Script mới (có phần học sinh) và triển khai phiên bản mới.'); }
+}
+async function rsLoad() {
+  if (!ptNeed()) return; const cls = $('#rsCls').value.trim(); if (!cls) { rsSt('err', 'Hãy nhập tên lớp học.'); return; }
+  rsSt('wait', 'Đang lấy danh sách…');
+  try {
+    const j = await gasGet({ action: 'roster', key: state.gkey, cls });
+    if (!j || !j.ok) throw new Error('x');
+    if (!j.list.length) { rsSt('empty', 'Lớp này chưa có danh sách trên sheet. Hãy dán danh sách rồi gửi lên.'); return; }
+    $('#rsList').value = j.list.map(x => x.name + (x.pin ? ' | ' + x.pin : '')).join('\n'); rsSt('ok', 'Đã lấy ' + j.list.length + ' em.');
+  } catch (e) { rsSt('err', 'Không lấy được danh sách. Kiểm tra mật khẩu và mã Apps Script mới.'); }
+}
+function rsCopy() {
+  const r = rsParse(); if (!r) return;
+  const t = 'Lớp ' + r.cls + ' – mã đăng nhập cổng học bài\n' + r.list.map(x => x.stt + '. ' + x.name + (x.pin ? ' – mã: ' + x.pin : '')).join('\n');
+  const done = () => rsSt('ok', 'Đã chép bảng mã. Hãy dán vào Zalo/Excel rồi gửi riêng từng em, không gửi cả bảng lên nhóm lớp.');
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => rsSt('err', 'Không chép được, hãy bôi đen danh sách rồi Ctrl+C.')); else rsSt('err', 'Không chép được, hãy bôi đen danh sách rồi Ctrl+C.');
+}
+function portalDownload() {
+  if (!endpointOk()) { ptSt('err', 'Chưa kết nối Google Sheet ở mục 4: trang cổng cần link Apps Script để lấy danh sách bài.'); return; }
+  const blob = new Blob([buildStudentHtml({ mode: 'portal', login: !!state.ptLogin, title: 'Cổng học bài – Thầy Vũ Tiến Lực', qa: [], vd: [] })], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'cong-hoc-sinh.html';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  toast('Đã tải trang cổng: cong-hoc-sinh.html. Hãy đưa lên mạng rồi gửi link cho học sinh.');
+}
+
 /* ---------- Xuất file HTML cho học sinh ---------- */
 function safeJSON(o) { return JSON.stringify(o).replace(/</g, '\\u003c').split(String.fromCharCode(8232)).join('\\u2028').split(String.fromCharCode(8233)).join('\\u2029'); }
-function buildStudentHtml() {
+function buildStudentHtml(over) {
   const css = $('#css-main').textContent, core = $('#js-core').textContent;
   const boot = { mode: 'student', title: state.title || 'Tìm hiểu bài mới', bg: state.noSbg ? '' : (state.sbg || state.bg), endpoint: endpointOk() ? state.endpoint.trim() : '', vd: state.vd, theme: state.theme, allowTheme: !!state.allowTheme, pick: state.pick, qa: state.qa };
+  if (over) Object.assign(boot, over);
   const K = 'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/';
   return '<!DOCTYPE html>\n<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
     '<meta name="color-scheme" content="light dark"><title>' + esc(boot.title) + '</title>' +
@@ -1962,9 +2373,9 @@ function startBoard() {
 }
 
 /* ---------- Thu kết quả về Google Sheet + bảng tổng hợp lớp ---------- */
-const GAS_CODE = `// TÌM HIỂU BÀI MỚI: nhận kết quả của học sinh vào Google Sheet
+const GAS_CODE = `// TÌM HIỂU BÀI MỚI: danh mục bài cho cổng học sinh + nhận kết quả vào Google Sheet
 const KEY = 'DOI-MAT-KHAU-O-DAY';   // mật khẩu để thầy/cô xem kết quả, hãy đổi trước khi triển khai
-const SHEET = 'KetQua';
+const SHEET = 'KetQua', CAT = 'BaiHoc', DAT = 'BaiHoc_Data', CHUNK = 45000;
 function sh_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let s = ss.getSheetByName(SHEET);
@@ -1977,11 +2388,136 @@ function sh_() {
 }
 function out_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function safe_(v) { v = String(v == null ? '' : v); return /^[=+\\-@]/.test(v) ? "'" + v : v; }
+function tab_(name, head) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let s = ss.getSheetByName(name);
+  if (!s) { s = ss.insertSheet(name); s.appendRow(head); s.setFrozenRows(1); }
+  return s;
+}
+const catS_ = function () { return tab_(CAT, ['id', 'Lớp', 'Môn', 'Tên bài', 'Thứ tự', 'Ngày đăng', 'Hạn chót', 'Số câu', 'Trạng thái', 'Chương', 'Lộ trình', 'Điểm đạt', 'Giao cho (JSON)']); };
+const datS_ = function () { return tab_(DAT, ['id', 'Cập nhật', 'Phần 1 (JSON)', 'Phần 2', 'Phần 3', 'Phần 4', 'Phần 5', 'Phần 6', 'Phần 7', 'Phần 8', 'Phần 9', 'Phần 10', 'Phần 11', 'Phần 12', 'Phần 13', 'Phần 14', 'Phần 15', 'Phần 16', 'Phần 17', 'Phần 18', 'Phần 19', 'Phần 20']); };
+function findRow_(s, id) {
+  const n = s.getLastRow(); if (n < 2) return 0;
+  const ids = s.getRange(2, 1, n - 1, 1).getValues();
+  for (var i = 0; i < ids.length; i++) if (ids[i][0] === id) return i + 2;
+  return 0;
+}
+function drop_(s, id) {
+  const n = s.getLastRow(); if (n < 2) return;
+  const ids = s.getRange(2, 1, n - 1, 1).getValues();
+  for (var i = ids.length - 1; i >= 0; i--) if (ids[i][0] === id) s.deleteRow(i + 2);
+}
+function giao_(g) {
+  const a = Array.isArray(g) ? g : [], o = [];
+  a.slice(0, 40).forEach(function (x) { if (x && x.l) o.push({ l: String(x.l).trim().slice(0, 12), h: String(x.h || '').slice(0, 10) }); });
+  return JSON.stringify(o);
+}
+function publish_(d) {
+  if (d.key !== KEY) return out_({ ok: false, error: 'key' });
+  const b = d.boot || {};
+  if (!d.id || !b.qa || b.qa.length < 4) return out_({ ok: false, error: 'data' });
+  const id = String(d.id).slice(0, 80), json = JSON.stringify(b);
+  const cs = catS_(), ds = datS_();
+  if (json.length > CHUNK * 20) return out_({ ok: false, error: 'size' });
+  drop_(ds, id); drop_(cs, id);
+  const row = [id, new Date()];
+  for (var i = 0; i < json.length; i += CHUNK) row.push(json.substr(i, CHUNK));
+  ds.appendRow(row);
+  cs.appendRow([id, safe_(d.lop), safe_(d.mon), safe_(d.ten), Number(d.order) || 1, new Date(), safe_(d.han), b.qa.length, 'Hiện', safe_(d.chuong), d.lotrinh ? 1 : '', Number(d.dat) || 0, giao_(d.giao)]);
+  CacheService.getScriptCache().removeAll(['cat', 'les_' + id]);
+  return out_({ ok: true, id: id });
+}
+function assign_(d) {
+  if (d.key !== KEY) return out_({ ok: false, error: 'key' });
+  const cs = catS_(), r = findRow_(cs, String(d.id));
+  if (!r) return out_({ ok: false, error: 'none' });
+  const o = cs.getRange(r, 1, 1, 13).getValues()[0];
+  cs.deleteRow(r);
+  cs.appendRow([o[0], o[1], o[2], o[3], Number(d.order) || 1, o[5], safe_(d.han), o[7], o[8], safe_(d.chuong), d.lotrinh ? 1 : '', Number(d.dat) || 0, giao_(d.giao)]);
+  CacheService.getScriptCache().removeAll(['cat']);
+  return out_({ ok: true });
+}
+function unpublish_(d) {
+  if (d.key !== KEY) return out_({ ok: false, error: 'key' });
+  drop_(datS_(), d.id); drop_(catS_(), d.id);
+  CacheService.getScriptCache().removeAll(['cat', 'les_' + d.id]);
+  return out_({ ok: true });
+}
+function catalog_() {
+  const c = CacheService.getScriptCache(), hit = c.get('cat');
+  if (hit) return ContentService.createTextOutput(hit).setMimeType(ContentService.MimeType.JSON);
+  const s = catS_(), n = s.getLastRow(), items = [];
+  if (n > 1) s.getRange(2, 1, n - 1, 13).getValues().forEach(function (r) {
+    if (r[8] !== 'Hiện') return;
+    var g = []; try { g = JSON.parse(r[12] || '[]'); } catch (x) {}
+    items.push({ id: r[0], lop: r[1], mon: r[2], ten: r[3], order: r[4], at: new Date(r[5]).getTime(), han: r[6] instanceof Date ? r[6].getTime() : String(r[6] || ''), n: r[7], chuong: r[9] || '', lotrinh: r[10] ? 1 : 0, dat: Number(r[11]) || 0, giao: g });
+  });
+  const txt = JSON.stringify({ ok: true, items: items });
+  try { c.put('cat', txt, 60); } catch (x) {}
+  return ContentService.createTextOutput(txt).setMimeType(ContentService.MimeType.JSON);
+}
+function lesson_(id) {
+  const c = CacheService.getScriptCache(), hit = c.get('les_' + id);
+  if (hit) return ContentService.createTextOutput(hit).setMimeType(ContentService.MimeType.JSON);
+  const s = datS_(), r = findRow_(s, id); if (!r) return out_({ ok: false, error: 'none' });
+  const json = s.getRange(r, 3, 1, 20).getValues()[0].map(function (x) { return x == null ? '' : x; }).join('');
+  const txt = '{"ok":true,"boot":' + json + '}';
+  try { c.put('les_' + id, txt, 300); } catch (x) {}
+  return ContentService.createTextOutput(txt).setMimeType(ContentService.MimeType.JSON);
+}
+const HS = 'HocSinh';
+const hsS_ = function () { return tab_(HS, ['Lớp', 'STT', 'Họ tên', 'Mã']); };
+function nk_(s) { return String(s == null ? '' : s).toLowerCase().replace(/\\s+/g, ''); }
+function pk_(s) { return String(s == null ? '' : s).trim().replace(/^0+/, ''); }
+function who_(cls, stt, pin) {
+  const s = hsS_(), n = s.getLastRow(); if (n < 2) return { ok: false, error: 'noclass' };
+  const c = CacheService.getScriptCache(), bk = 'bf_' + nk_(cls) + '_' + Number(stt);
+  if (Number(c.get(bk) || 0) >= 8) return { ok: false, error: 'locked' };
+  const v = s.getRange(2, 1, n - 1, 4).getValues(); var any = false;
+  for (var i = 0; i < v.length; i++) {
+    if (nk_(v[i][0]) !== nk_(cls)) continue;
+    any = true;
+    if (Number(v[i][1]) !== Number(stt)) continue;
+    const p = pk_(v[i][3]);
+    if (p && p !== pk_(pin)) { try { c.put(bk, String(Number(c.get(bk) || 0) + 1), 600); } catch (x) {} return { ok: false, error: 'pin' }; }
+    return { ok: true, name: String(v[i][2]), cls: String(v[i][0]), stt: Number(v[i][1]) };
+  }
+  return { ok: false, error: any ? 'stt' : 'noclass' };
+}
+function roster_(d) {
+  if (d.key !== KEY) return out_({ ok: false, error: 'key' });
+  const cls = String(d.cls || '').trim(), list = Array.isArray(d.list) ? d.list.slice(0, 80) : [];
+  if (!cls) return out_({ ok: false, error: 'data' });
+  const s = hsS_(), n = s.getLastRow();
+  if (n > 1) { const v = s.getRange(2, 1, n - 1, 1).getValues(); for (var i = v.length - 1; i >= 0; i--) if (nk_(v[i][0]) === nk_(cls)) s.deleteRow(i + 2); }
+  list.forEach(function (x, i) { if (x && x.name) s.appendRow([safe_(cls), Number(x.stt) || i + 1, safe_(x.name), safe_(x.pin)]); });
+  return out_({ ok: true, n: list.length });
+}
+function progress_(p) {
+  const w = who_(String(p.cls || ''), p.stt, p.pin); if (!w.ok) return out_(w);
+  const s = sh_(), n = s.getLastRow(), best = {};
+  if (n > 1) {
+    const from = Math.max(2, n - 1999);
+    s.getRange(from, 1, n - from + 1, 11).getValues().forEach(function (r) {
+      if (nk_(r[3]) === nk_(w.cls) && Number(r[10]) === w.stt) best[r[2]] = Math.max(best[r[2]] || 0, Number(r[5]) || 0);
+    });
+  }
+  return out_({ ok: true, best: best });
+}
 function doPost(e) {
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     const d = JSON.parse(e.postData.contents);
+    if (d.action === 'publish') return publish_(d);
+    if (d.action === 'unpublish') return unpublish_(d);
+    if (d.action === 'assign') return assign_(d);
+    if (d.action === 'roster') return roster_(d);
     if (d.action !== 'submit') return out_({ ok: false, error: 'action' });
+    if (d.cls && d.stt) {
+      const w = who_(String(d.cls), d.stt, d.pin);
+      if (w.ok) { d.name = w.name; d.cls = w.cls; }
+      else if (w.error === 'pin' || w.error === 'locked') return out_({ ok: false, error: w.error });
+    }
     const s = sh_(), n = s.getLastRow();
     if (n > 1) {
       const from = Math.max(2, n - 299);
@@ -1998,6 +2534,16 @@ function doPost(e) {
 function doGet(e) {
   const p = e.parameter || {};
   if (p.action === 'ping') return out_({ ok: true, pong: true });
+  if (p.action === 'catalog') return catalog_();
+  if (p.action === 'lesson') return lesson_(String(p.id || ''));
+  if (p.action === 'login') return out_(who_(String(p.cls || ''), p.stt, p.pin));
+  if (p.action === 'progress') return progress_(p);
+  if (p.action === 'roster') {
+    if (p.key !== KEY) return out_({ ok: false, error: 'key' });
+    const s = hsS_(), n = s.getLastRow(), list = [];
+    if (n > 1) s.getRange(2, 1, n - 1, 4).getValues().forEach(function (r) { if (nk_(r[0]) === nk_(p.cls)) list.push({ stt: r[1], name: r[2], pin: String(r[3] || '') }); });
+    return out_({ ok: true, list: list });
+  }
   if (p.action !== 'results') return out_({ ok: false, error: 'action' });
   if (p.key !== KEY) return out_({ ok: false, error: 'key' });
   const s = sh_(), n = s.getLastRow();
@@ -2159,6 +2705,125 @@ function dashFocus(i) {
     else if (f === 'close' || e.target === m) m.remove();
   });
   m.addEventListener('keydown', e => { if (e.key === 'Escape') m.remove(); });
+}
+
+/* ===== Bảng điểm cả lớp theo bài giao (mục 3) ===== */
+const BD = { rows: [], cat: [], cls: '', mon: '', les: '', loading: false, err: '', at: 0, last: null };
+const bdHan = h => { if (!h) return 0; if (typeof h === 'number') return h; if (/^\d{4}-\d{2}-\d{2}$/.test(h)) return new Date(h + 'T23:59:59').getTime(); const d = new Date(h); return isNaN(d) ? 0 : d.getTime(); };
+const bdDate = ms => { if (!ms) return ''; const d = new Date(ms), p = n => String(n).padStart(2, '0'); return p(d.getDate()) + '/' + p(d.getMonth() + 1); };
+function bdClasses() {
+  const m = new Map(), add = c => { c = String(c || '').trim(); if (c && c !== '*' && !m.has(norm(c))) m.set(norm(c), c); };
+  BD.rows.forEach(r => add(r.cls)); BD.cat.forEach(i => (i.giao || []).forEach(g => add(g.l)));
+  Object.keys(state.rosters || {}).forEach(k => { if (String(state.rosters[k] || '').trim()) add(k.toUpperCase()); });
+  return [...m.values()].sort((a, b) => a.localeCompare(b, 'vi', { numeric: true }));
+}
+function bdCompute() {
+  const cls = BD.cls; if (!cls) return null;
+  const grade = (String(cls).match(/^\d+/) || [''])[0];
+  const lessons = BD.cat.filter(i => (!i.lop || !grade || String(i.lop) === grade) && (!(i.giao || []).length || i.giao.some(g => norm(g.l) === norm(cls))) && (!BD.mon || i.mon === BD.mon))
+    .sort((a, b) => String(a.mon).localeCompare(String(b.mon), 'vi') || (Number(a.order) || 0) - (Number(b.order) || 0))
+    .map(i => { const g = (i.giao || []).find(x => norm(x.l) === norm(cls)); return { id: i.id, mon: i.mon, ten: i.ten, han: bdHan(g && g.h ? g.h : i.han) }; });
+  const rows = BD.rows.filter(r => norm(r.cls) === norm(cls));
+  const nm = new Map();
+  String(state.rosters[norm(cls)] || '').split(/\n/).map(s => s.trim()).filter(Boolean).forEach(s => { if (!nm.has(norm(s))) nm.set(norm(s), s); });
+  const hasRoster = nm.size > 0;
+  rows.forEach(r => { const k = norm(r.name); if (k && !nm.has(k)) nm.set(k, String(r.name).trim()); });
+  const students = [...nm.entries()].map(([k, name]) => ({ k, name, cells: [], miss: 0, late: 0, sum: 0, cnt: 0 }));
+  students.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+  const now = Date.now();
+  lessons.forEach((L, li) => {
+    const lr = rows.filter(r => norm(r.title) === norm(L.ten));
+    L.rows = lr;
+    students.forEach(s => {
+      const mine = lr.filter(r => norm(r.name) === s.k);
+      if (!mine.length) { const over = L.han && now > L.han; s.cells[li] = { st: 'miss', over }; s.miss++; return; }
+      const best = Math.max(...mine.map(r => Number(r.score) || 0)), first = Math.min(...mine.map(r => r.at)), late = !!(L.han && first > L.han);
+      s.cells[li] = { st: late ? 'late' : 'ok', best, first, tries: mine.length }; s.sum += best; s.cnt++; if (late) s.late++;
+    });
+    L.done = students.filter(s => s.cells[li].st !== 'miss').length;
+    L.avg = L.done ? students.reduce((a, s) => a + (s.cells[li].best || 0), 0) / L.done : 0;
+  });
+  students.forEach(s => { s.avg = s.cnt ? s.sum / s.cnt : null; });
+  return { cls, lessons, students, hasRoster };
+}
+function bdWrong(L, cls) {
+  if (!L) return [];
+  const latest = new Map(); (L.rows || []).forEach(r => { const k = norm(r.name), o = latest.get(k); if (!o || r.at > o.at) latest.set(k, r); });
+  const qm = new Map();
+  latest.forEach(r => (r.items || []).forEach(it => {
+    if (!it || !it.q) return; const key = keyOf(it.q + '' + it.a);
+    let o = qm.get(key); if (!o) { o = { q: it.q, a: it.a, n: 0, w: 0 }; qm.set(key, o); }
+    o.n++; if (it.w > 0) o.w++;
+  }));
+  return [...qm.values()].filter(o => o.w > 0).sort((a, b) => (b.w / b.n) - (a.w / a.n) || b.n - a.n);
+}
+function bdHtml() {
+  const classes = bdClasses(), mons = [...new Set(BD.cat.map(i => i.mon).filter(Boolean))];
+  let h = '<section class="card"><div class="row"><label for="bdCls" style="margin:0">Lớp</label><select id="bdCls"><option value="">— Chọn lớp —</option>' +
+    classes.map(c => '<option value="' + esc(c) + '"' + (norm(c) === norm(BD.cls) ? ' selected' : '') + '>' + esc(c) + '</option>').join('') + '</select>' +
+    (mons.length > 1 ? '<label for="bdMon" style="margin:0">Môn</label><select id="bdMon"><option value="">Tất cả</option>' + mons.map(m => '<option' + (m === BD.mon ? ' selected' : '') + '>' + esc(m) + '</option>').join('') + '</select>' : '') +
+    '<span class="hint" style="margin:0">Cập nhật ' + new Date(BD.at).toLocaleTimeString('vi-VN') + ' · hạn chót theo từng lớp</span></div></section>';
+  const D = bdCompute(); BD.last = D;
+  if (!D) return h + '<section class="card"><p class="status empty">Hãy chọn một lớp để xem bảng điểm.</p></section>';
+  if (!D.lessons.length) return h + '<section class="card"><p class="status empty">Lớp ' + esc(D.cls) + ' chưa có bài nào được giao trên cổng học sinh.</p></section>';
+  h += '<section class="card"><h2>Bảng điểm lớp ' + esc(D.cls) + '</h2>' +
+    (D.hasRoster ? '' : '<p class="status err">Chưa có danh sách lớp nên chỉ thấy các em đã nộp bài. Dán danh sách ở cuối trang để biết em nào chưa làm.</p>') +
+    '<div class="qa-wrap"><table class="tbl bd-tbl"><thead><tr><th>Họ tên</th>' + D.lessons.map(L => '<th title="' + esc(L.ten) + '">' + esc(L.ten.length > 22 ? L.ten.slice(0, 21) + '…' : L.ten) + (L.mon ? '<br><small>' + esc(L.mon) + '</small>' : '') + (L.han ? '<br><small>Hạn ' + bdDate(L.han) + '</small>' : '') + '</th>').join('') + '<th>Chưa làm</th><th>TB</th></tr></thead><tbody>' +
+    D.students.map(s => '<tr><td>' + esc(s.name) + '</td>' + s.cells.map(c => c.st === 'miss' ? '<td class="bd-miss">' + (c.over ? 'Chưa nộp' : '—') + '</td>' : '<td class="bd-' + c.st + '">' + fmt(c.best) + (c.st === 'late' ? ' <small>trễ</small>' : '') + '</td>').join('') + '<td>' + (s.miss ? '<b>' + s.miss + '</b>' : '0') + '</td><td>' + (s.avg == null ? '' : fmt(s.avg)) + '</td></tr>').join('') +
+    '</tbody><tfoot><tr><th>Đã làm / sĩ số</th>' + D.lessons.map(L => '<th>' + L.done + '/' + D.students.length + (L.done ? '<br><small>TB ' + fmt(L.avg) + '</small>' : '') + '</th>').join('') + '<th></th><th></th></tr></tfoot></table></div>' +
+    '<p class="hint">Ô đỏ: chưa nộp. Ô vàng: nộp sau hạn chót. Điểm là lần cao nhất của em.</p>' +
+    '<div class="row"><button class="btn btn-primary" data-act="bd-xlsx">⬇ Tải Excel (bảng điểm, chưa làm, nộp trễ, câu hay sai)</button></div></section>';
+  const need = D.students.filter(s => s.miss).sort((a, b) => b.miss - a.miss || a.name.localeCompare(b.name, 'vi'));
+  h += '<section class="card"><h2>Em cần nhắc</h2>' + (need.length ? '<ul class="bd-list">' + need.map(s => '<li><b>' + esc(s.name) + '</b>: chưa làm ' + D.lessons.filter((L, i) => s.cells[i].st === 'miss').map(L => esc(L.ten)).join('; ') + '</li>').join('') + '</ul>' : '<p class="status ok">✓ Cả lớp đã làm đủ các bài được giao.</p>');
+  const lates = []; D.students.forEach(s => s.cells.forEach((c, i) => { if (c.st === 'late') lates.push(s.name + ' (' + D.lessons[i].ten + ', nộp ' + bdDate(c.first) + ')'); }));
+  if (lates.length) h += '<p class="hint"><b>Nộp trễ (' + lates.length + '):</b> ' + lates.map(esc).join('; ') + '</p>';
+  h += '</section>';
+  const withData = D.lessons.filter(L => L.rows.length);
+  if (!BD.les || !withData.some(L => L.id === BD.les)) BD.les = withData.length ? withData[0].id : '';
+  if (withData.length) {
+    const L = D.lessons.find(x => x.id === BD.les), W = bdWrong(L, D.cls);
+    h += '<section class="card"><h2>Câu cả lớp hay sai</h2><label for="bdLes">Bài</label><select id="bdLes">' + withData.map(x => '<option value="' + esc(x.id) + '"' + (x.id === BD.les ? ' selected' : '') + '>' + esc(x.ten) + '</option>').join('') + '</select>' +
+      (W.length ? '<ol class="hard">' + W.slice(0, 8).map(o => { const t = splitTag(o.q), r = pct(o.w, o.n); return '<li><div class="hard-top"><span class="rate' + (r >= 50 ? ' hi' : '') + '">' + r + '%</span><div class="hard-q">' + (t.tag ? '<span class="q-tag">' + esc(t.tag) + '</span> ' : '') + esc(t.text) + '</div></div><div class="hard-meta">Sai ' + o.w + '/' + o.n + ' em · đáp án: ' + esc(o.a) + '</div></li>'; }).join('') + '</ol>' : '<p class="status ok">Cả lớp chưa nhầm câu nào.</p>') + '</section>';
+  }
+  h += '<section class="card"><h2>Danh sách lớp ' + esc(D.cls) + '</h2><label for="bdRoster">Mỗi dòng một họ tên (nhập một lần, máy nhớ, dùng chung với bảng “Em chưa làm”)</label><textarea id="bdRoster" rows="5" placeholder="Nguyễn Văn An&#10;Trần Thị Bình">' + esc(String(state.rosters[norm(D.cls)] || '')) + '</textarea>' +
+    '<p class="hint">Họ tên phải gõ giống cách em nhập khi làm bài (không phân biệt hoa thường và dấu).</p></section>';
+  return h;
+}
+async function loadBoard() {
+  const body = $('#bdBody'); if (!body) return;
+  body.innerHTML = '<section class="card"><p class="status empty">Đang tải bảng điểm từ Google Sheet…</p></section>';
+  try {
+    const [c, j] = await Promise.all([gasGet({ action: 'catalog' }), gasGet({ action: 'results', key: state.gkey })]);
+    if (!j || !j.ok) throw new Error(j && j.error === 'key' ? 'key' : 'x');
+    BD.cat = (c && c.items) || []; BD.rows = j.rows || []; BD.at = Date.now(); BD.err = '';
+  } catch (e) { BD.err = e.message === 'key' ? 'Mật khẩu chưa đúng. Hãy kiểm tra lại ở bước 4 trang giáo viên.' : 'Không tải được bảng điểm. Kiểm tra mạng và cài đặt Apps Script.'; }
+  paintBoard();
+}
+function paintBoard() {
+  const body = $('#bdBody'); if (!body || view !== 'board3') return;
+  body.innerHTML = BD.err ? '<section class="card"><p class="status err" role="alert">' + esc(BD.err) + '</p></section>' : bdHtml();
+}
+function renderBoard3() {
+  view = 'board3'; Game.stop(); if (state.sbg) setBackground(state.bg || '');
+  app.innerHTML = '<main class="screen lecture"><header class="lec-head"><div><p class="eyebrow">Bảng điểm cả lớp</p><h1>Theo bài giao trên cổng học sinh</h1></div>' +
+    '<div class="lec-actions"><button class="btn" data-act="bd-refresh">↻ Làm mới</button><button class="btn btn-ghost" data-act="home">← Trang giáo viên</button></div></header><div id="bdBody"></div></main>';
+  loadBoard();
+}
+function bdExport() {
+  const D = BD.last; if (!D || !D.lessons.length) { toast('Hãy chọn lớp có bài được giao.'); return; }
+  if (!window.XLSX) { toast('Chưa tải được thư viện Excel. Hãy kiểm tra kết nối mạng.'); return; }
+  const L0 = D.lessons, head = ['STT', 'Họ và tên'].concat(L0.map(L => L.ten), ['Số bài chưa làm', 'Điểm TB']);
+  const A = [head].concat(D.students.map((s, i) => [i + 1, s.name].concat(s.cells.map(c => c.st === 'miss' ? '' : c.best), [s.miss, s.avg == null ? '' : Math.round(s.avg * 10) / 10])));
+  const miss = [['Họ và tên', 'Môn', 'Bài chưa làm', 'Hạn chót']], late = [['Họ và tên', 'Môn', 'Bài', 'Hạn chót', 'Nộp lần đầu', 'Điểm cao nhất']];
+  D.students.forEach(s => s.cells.forEach((c, i) => { const L = L0[i];
+    if (c.st === 'miss') miss.push([s.name, L.mon, L.ten, bdDate(L.han)]);
+    else if (c.st === 'late') late.push([s.name, L.mon, L.ten, bdDate(L.han), new Date(c.first).toLocaleString('vi-VN'), c.best]); }));
+  const wr = [['Bài', 'Câu hỏi', 'Đáp án', 'Số em sai', 'Số em được hỏi', 'Tỉ lệ sai (%)']];
+  L0.forEach(L => bdWrong(L, D.cls).slice(0, 10).forEach(o => wr.push([L.ten, splitTag(o.q).text, o.a, o.w, o.n, pct(o.w, o.n)])));
+  const wb = XLSX.utils.book_new(), add = (a, n, w) => { const ws = XLSX.utils.aoa_to_sheet(a); ws['!cols'] = w.map(x => ({ wch: x })); XLSX.utils.book_append_sheet(wb, ws, n); };
+  add(A, 'Bang diem', [5, 26].concat(L0.map(() => 18), [14, 10]));
+  add(miss, 'Chua lam', [26, 14, 40, 12]); add(late, 'Nop tre', [26, 14, 40, 12, 20, 12]); add(wr, 'Cau hay sai', [36, 60, 30, 10, 14, 12]);
+  XLSX.writeFile(wb, 'bang-diem-' + String(D.cls).replace(/[^\w-]/g, '') + '.xlsx');
 }
 
 /* ---------- Menu giảng bài: hình ảnh và trình chiếu ---------- */
@@ -2696,6 +3361,30 @@ function ceTextHtml() {
   return '<div class="ce-cake" aria-hidden="true">🎂</div><div class="ce-kicker">' + letters('CHÚC MỪNG SINH NHẬT', 0) + '</div>' +
     '<div class="ce-name">' + letters(CE.name, 12) + '</div><div class="ce-line" aria-hidden="true"></div><div class="ce-sub">' + esc(sub) + '</div>';
 }
+/* Nhạc khi chúc mừng: chọn ngẫu nhiên, hết bài thì chọn bài khác; dừng hiệu ứng thì tắt và trả lại nhạc nền */
+const CE_MUSIC = {
+  honor: ['https://files.catbox.moe/3x0xfg.mp3', 'https://files.catbox.moe/s6f67c.mp3', 'https://files.catbox.moe/nqfrce.mp3', 'https://files.catbox.moe/b46s4f.mp3', 'https://files.catbox.moe/3729yc.mp3', 'https://files.catbox.moe/jadcfn.mp3'],
+  birthday: ['https://files.catbox.moe/g0htu2.mp3', 'https://files.catbox.moe/tv30n5.mp3', 'https://files.catbox.moe/fpt34i.mp3', 'https://files.catbox.moe/f6o9vc.mp3', 'https://files.catbox.moe/f4qmi8.mp3']
+};
+const CEA = { audio: new Audio(), list: [], last: '', resume: false, fails: 0 };
+CEA.audio.preload = 'none';
+function ceaNext() {
+  const l = CEA.list; if (!l.length || !CE.on) return;
+  let u; do { u = l[Math.floor(Math.random() * l.length)]; } while (l.length > 1 && u === CEA.last);
+  CEA.last = u; CEA.audio.src = u; CEA.audio.volume = Math.max(0, Math.min(1, state.muVol == null ? 0.6 : state.muVol));
+  CEA.audio.play().catch(() => {});
+}
+function ceaStart(type) {
+  CEA.list = type === 'birthday' ? CE_MUSIC.birthday : CE_MUSIC.honor; CEA.fails = 0;
+  CEA.resume = !!MU.playing; if (MU.playing) { MU.playing = false; MU.audio.pause(); ytCmd('pauseVideo'); muPaint(); }
+  ceaNext();
+}
+function ceaStop() {
+  CEA.audio.pause(); CEA.audio.removeAttribute('src'); CEA.list = [];
+  if (CEA.resume) { CEA.resume = false; MU.playing = true; if (MU.yt) { ytCmd('playVideo'); muVolApply(); } else MU.audio.play().catch(() => { MU.playing = false; }); muPaint(); }
+}
+CEA.audio.addEventListener('ended', ceaNext);
+CEA.audio.addEventListener('error', () => { if (CE.on && CEA.audio.src && ++CEA.fails < 6) ceaNext(); });
 function ceRun(type, name, sub, title) {
   ceStop(true);
   CE.type = CE_AW[type] ? type : 'victory'; type = CE.type; CE.name = name; CE.sub = sub; CE.title = title || ''; CE.on = true; CE.parts = []; CE.rockets = []; CE.balloons = []; CE.t = 0;
@@ -2705,13 +3394,14 @@ function ceRun(type, name, sub, title) {
   ceSizeCanvas();
   CE.next = { fw: 0.2, cannon: 0.1, balloon: 0, star: 0, text: 15 };
   CE.last = performance.now(); CE.raf = requestAnimationFrame(ceLoop);
+  ceaStart(type);
   ssHint && ssHint('Bấm vào bong bóng để làm nổ · Esc để dừng hiệu ứng');
 }
 function ceReplayText() {
   const t = $('#ceText'); t.classList.remove('in'); void t.offsetWidth; t.classList.add('in');
 }
 function ceStop(silent) {
-  CE.on = false; cancelAnimationFrame(CE.raf);
+  CE.on = false; cancelAnimationFrame(CE.raf); ceaStop();
   const r = $('#celeb'); if (r) { r.hidden = true; }
   if (CE.ctx) CE.ctx.clearRect(0, 0, CE.W, CE.H);
   CE.parts = []; CE.rockets = []; CE.balloons = [];
@@ -2855,6 +3545,9 @@ TH.onAct = (act, el) => {
     case 'copy-gas': copyGas(); break;
     case 'dash': renderDash(); break;
     case 'dash-refresh': loadDash(); break;
+    case 'board3': renderBoard3(); break;
+    case 'bd-refresh': loadBoard(); break;
+    case 'bd-xlsx': bdExport(); break;
     case 'dash-focus': dashFocus(+el.dataset.i); break;
     case 'pick-xlsx': $('#xlsxInput').click(); break;
     case 'sample': downloadSample(); break;
@@ -2865,11 +3558,24 @@ TH.onAct = (act, el) => {
     case 'lecture': renderLecture(); break;
     case 'hm-open': hmOpen(el.dataset.p); break;
     case 'notice-open': hmOpen('pan6'); break;
+    case 'logout': try { localStorage.removeItem(AUTH_KEY); } catch (x) { /* bỏ qua */ } renderLogin(); break;
+    case 'pt-send': portalSend(); break;
+    case 'pt-assign': portalAssign(); break;
+    case 'pt-edit': portalEdit(el.dataset.id); break;
+    case 'pt-gadd': ptGiao.push({ l: '', h: '' }); ptGiaoPaint(); { const ins = $$('#ptGiaoBox input[data-gk=l]'); if (ins.length) ins[ins.length - 1].focus(); } break;
+    case 'pt-gdel': ptGiao.splice(+el.dataset.i, 1); ptGiaoPaint(); break;
+    case 'pt-list': portalList(); break;
+    case 'pt-del': portalDel(el.dataset.id); break;
+    case 'pt-portal': portalDownload(); break;
+    case 'rs-send': rsSend(); break;
+    case 'rs-load': rsLoad(); break;
+    case 'rs-copy': rsCopy(); break;
     case 'nt-make': case 'nt-style': case 'nt-quote': case 'nt-copy': ntAct(act); break;
     case 'export-open': {
       if (state.qa.length < 4) { toast('Cần ít nhất 4 cặp câu hỏi – đáp án.'); break; }
       const sel = $('#xLibSel'), L = (state.lib && state.lib.img) || [];
       sel.innerHTML = '<option value="">' + (L.length ? '— Chọn ảnh đã lưu —' : 'Thư viện còn trống (link ảnh thầy dán ở mục Hình để giảng bài sẽ được lưu)') + '</option>' + L.map(x => '<option value="' + esc(x.url) + '">' + esc(x.name) + '</option>').join('');
+      ptFill();
       $('#xSbg').value = state.sbg || ''; $('#xNoBg').checked = !!state.noSbg; $('#xsbgStatus').innerHTML = '';
       hmOpen('pan5'); break;
     }
@@ -2955,7 +3661,13 @@ app.addEventListener('change', e => {
   else if (e.target.id === 'xNoBg') { state.noSbg = e.target.checked; save(); }
   else if (e.target.id === 'xLibSel') { if (e.target.value) { $('#xSbg').value = e.target.value; state.sbg = e.target.value; state.noSbg = false; $('#xNoBg').checked = false; const o = $('#tSbg'); if (o) o.value = state.sbg; save(); $('#xsbgStatus').innerHTML = ''; } }
   else if (e.target.id === 'tAllowTheme') { state.allowTheme = e.target.checked; save(); }
+  else if (e.target.id === 'ptLogin') { state.ptLogin = e.target.checked; save(); }
+  else if (e.target.id === 'rsCls') { const v = state.rosters[norm(e.target.value)]; if (v && !$('#rsList').value.trim()) $('#rsList').value = v; }
   else if (e.target.id === 'dCls') { DASH.cls = e.target.value; paintDash(); }
+  else if (e.target.id === 'bdCls') { BD.cls = e.target.value; paintBoard(); }
+  else if (e.target.id === 'bdMon') { BD.mon = e.target.value; paintBoard(); }
+  else if (e.target.id === 'bdLes') { BD.les = e.target.value; paintBoard(); }
+  else if (e.target.id === 'bdRoster') { state.rosters[norm(BD.cls)] = e.target.value; save(); paintBoard(); }
   else if (e.target.id === 'rosterBox') { state.rosters[norm(DASH.cls)] = e.target.value; save(); paintDash(); }
   else if (e.target.id === 'pGrade') { state.pGrade = e.target.value; save(); refreshPrompt(); }
 });
@@ -2990,11 +3702,36 @@ document.addEventListener('paste', e => {
   if (files.length) { e.preventDefault(); addFiles(files.map((f, k) => new File([f], 'Ảnh dán ' + (k + 1) + '.png', { type: f.type }))); }
 });
 
+/* ---------- Cổng giáo viên: đăng nhập lần đầu, lần sau tự vào ---------- */
+const AUTH_KEY = 'tuhbm_auth_v1';
+const authNorm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().replace(/\s+/g, ' ').trim();
+const authHash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return 'h' + h.toString(36); };
+const authOk = () => { try { return localStorage.getItem(AUTH_KEY) === authHash('thanh hoa'); } catch (e) { return false; } };
+function renderLogin() {
+  view = 'login'; setBackground('');
+  app.innerHTML = '<main class="screen"><section class="card" style="max-width:26rem;margin:12vh auto 0;text-align:center">' + TH.logoHtml('lg') +
+    '<p class="eyebrow" style="margin-top:.6rem">Cổng giáo viên</p><h1 style="margin:.2rem 0 .4rem">Đăng nhập</h1>' +
+    '<p class="hint" style="margin-top:0">Chỉ cần đăng nhập lần đầu trên máy này, những lần sau sẽ tự vào.</p>' +
+    '<form id="loginForm" novalidate style="text-align:left"><label for="loginKey">Mã đăng nhập</label>' +
+    '<input type="password" id="loginKey" autocomplete="current-password" autofocus placeholder="Nhập mã giáo viên">' +
+    '<div class="err" id="loginErr" role="alert" style="color:#b91c1c;min-height:1.3em;margin-top:.3rem"></div>' +
+    '<button class="btn btn-primary btn-lg" type="submit" style="width:100%">Vào</button></form></section></main>';
+  const f = $('#loginForm'); setTimeout(() => { const i = $('#loginKey'); if (i) i.focus(); }, 30);
+  f.addEventListener('submit', e => {
+    e.preventDefault();
+    if (authNorm($('#loginKey').value) === 'thanh hoa') { try { localStorage.setItem(AUTH_KEY, authHash('thanh hoa')); } catch (x) { /* vẫn vào được phiên này */ } start(); }
+    else { $('#loginErr').textContent = 'Mã chưa đúng, thầy thử lại nhé.'; $('#loginKey').select(); }
+  });
+}
+function start() {
+  load();
+  slides = state.links.map(u => ({ id: ++uid, kind: 'link', url: u }));
+  if (state.bg) setBackground(state.bg);
+  renderHome();
+}
+
 /* ---------- Khởi động ---------- */
-load();
-slides = state.links.map(u => ({ id: ++uid, kind: 'link', url: u }));
-if (state.bg) setBackground(state.bg);
-renderHome();
+if (authOk()) start(); else renderLogin();
 })();
 </script>
 </body>
