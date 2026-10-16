@@ -361,12 +361,12 @@ html.mode-board .tbl{font-size:1.1rem}
 
 /* Trình chiếu toàn màn hình */
 .slideshow{position:fixed;inset:0;z-index:2000;background:#000;overflow:hidden;color:#fff;user-select:none;-webkit-user-select:none}
-#ssView{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
+#ssView{position:absolute;inset:0 var(--webpx,0px) 0 0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
 .slideshow.tool-pen #ssView{cursor:crosshair}
 .slideshow.tool-laser #ssView,.slideshow.tool-spot #ssView{cursor:none}
 .slideshow.panning #ssView{cursor:grabbing}
 #ssStage{position:relative;display:inline-block;transform-origin:50% 50%;will-change:transform;line-height:0}
-.ss-img{display:block;max-width:100vw;max-height:100vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+.ss-img{display:block;max-width:calc(100vw - var(--webpx,0px));max-height:100vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
 .ss-ink{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .ss-msg{color:#fff;font-size:1.4rem;padding:var(--s4);text-align:center;line-height:1.5}
 #ssFx{position:absolute;inset:0;pointer-events:none;z-index:2}
@@ -378,6 +378,8 @@ html.mode-board .tbl{font-size:1.1rem}
 #ssHint{position:absolute;top:1rem;left:50%;transform:translateX(-50%);z-index:6;background:rgb(0 0 0/.78);border:1px solid rgb(255 255 255/.25);padding:.6rem 1rem;border-radius:.8rem;
   font-size:.95rem;line-height:1.45;text-align:center;max-width:92vw;opacity:0;pointer-events:none;transition:opacity .3s}
 #ssHint.show{opacity:1}
+.web-on #ssHint{left:calc((100% - var(--webpx))/2);max-width:calc(100% - var(--webpx) - 2rem)}
+.web-full #ssHint{display:none}
 .ss-nav,.ss-bar,#ssThumbs{z-index:4;transition:opacity .25s}
 .ss-nav{position:absolute;top:50%;transform:translateY(-50%);width:3.6rem;height:5.5rem;font-size:2.8rem;line-height:1;background:rgb(255 255 255/.14);
   color:#fff;border:0;cursor:pointer;border-radius:.6rem}
@@ -596,6 +598,31 @@ body.hm-lock{overflow:hidden}
 .ce-btns button{font:inherit;border-radius:.7rem;padding:.6rem 1rem;cursor:pointer;border:1px solid rgb(255 255 255/.3);background:transparent;color:#fff}
 .ce-btns .ce-go{flex:1;background:linear-gradient(135deg,#ff4d6d,#ffb703);color:#2a1200;font-weight:800;border:0}
 @media (prefers-reduced-motion:reduce){.ce-rays,.ce-text.in .ce-cake,.ce-text.in .ce-trophy,.celeb .ce-name{animation:none}}
+
+/* Cửa sổ web bên phải */
+.web-pane{position:absolute;top:0;right:0;bottom:0;width:var(--webpx,0);z-index:3;background:#fff;display:flex;flex-direction:column;border-left:3px solid var(--primary,#c2410c);box-shadow:-8px 0 24px rgba(0,0,0,.35)}
+.web-pane[hidden]{display:none}
+.web-bar{flex:none;display:flex;align-items:center;gap:.3rem;padding:.3rem .4rem;background:#1b1b22;color:#fff}
+.web-bar input{flex:1;min-width:0;font:inherit;font-size:.82rem;color:#fff;background:rgb(255 255 255/.12);border:1px solid rgb(255 255 255/.25);border-radius:.5rem;padding:.35rem .55rem}
+.web-bar button,.web-bar a{font:inherit;font-size:.9rem;color:#fff;text-decoration:none;background:rgb(255 255 255/.12);border:1px solid transparent;border-radius:.5rem;min-width:2.2rem;height:2.2rem;display:inline-grid;place-items:center;cursor:pointer;padding:0 .4rem}
+.web-bar button:hover,.web-bar a:hover,.web-bar button:focus-visible,.web-bar a:focus-visible{background:rgb(255 255 255/.3);outline:none}
+.web-bar button.on{background:var(--primary,#c2410c);border-color:#fff}
+.web-sz{display:inline-flex;gap:.2rem}
+#webFrame{flex:1;min-height:0;width:100%;border:0;background:#fff}
+.slideshow.web-on .ss-bar{right:var(--webpx,0)}
+.slideshow.web-full .ss-bar{right:0;z-index:7}
+.slideshow.web-on .ss-next{right:calc(var(--webpx,0px) + .6rem)}
+.slideshow.web-full .ss-nav,.slideshow.web-full #ssView{visibility:hidden}
+.slideshow.web-on #ssWebBtn{background:rgb(255 255 255/.28);border-color:#fff}
+@media (max-width:760px){.web-bar input{display:none}}
+.web-menu{width:min(24rem,92vw)}
+.web-lbl{font-size:.85rem;color:rgb(255 255 255/.8);margin:0}
+.web-sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.web-sizes button{font:inherit;color:#fff;background:rgb(255 255 255/.1);border:2px solid rgb(255 255 255/.25);border-radius:.7rem;padding:.55rem .2rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.web-sizes button b{font-size:1.5rem;line-height:1}
+.web-sizes button span{font-size:.78rem}
+.web-sizes button:hover,.web-sizes button:focus-visible{background:linear-gradient(135deg,#ff8fab,#ffb703);color:#2a1200;border-color:#fff;outline:none}
+.web-note{margin:0;font-size:.78rem;color:rgb(255 255 255/.7)}
 </style>
 </head>
 <body>
@@ -622,6 +649,28 @@ body.hm-lock{overflow:hidden}
     <input type="text" id="ceName" maxlength="60" placeholder="Gõ tên (ví dụ: Nguyễn Minh Anh)" aria-label="Tên" autocomplete="off">
     <input type="text" id="ceSub" maxlength="90" placeholder="Lời chúc (không bắt buộc)" aria-label="Dòng phụ" autocomplete="off">
     <div class="ce-btns"><button class="ce-go" data-act="ce-start">▶ Bắt đầu hiệu ứng</button><button data-act="ce-menu" aria-label="Đóng">Đóng</button></div>
+  </div>
+  <div id="webPane" class="web-pane" hidden>
+    <div class="web-bar">
+      <input type="text" id="webUrl" aria-label="Địa chỉ trang web" autocomplete="off" spellcheck="false">
+      <button data-act="web-go" title="Tải trang">↻</button>
+      <span class="web-sz" role="group" aria-label="Cỡ cửa sổ web"><button data-act="web-size" data-size="25" title="1/4 màn hình">¼</button><button data-act="web-size" data-size="50" title="1/2 màn hình">½</button><button data-act="web-size" data-size="100" title="Toàn màn hình">⛶</button></span>
+      <a id="webOpen" href="#" target="_blank" rel="noopener noreferrer" title="Mở trong tab mới (nếu trang không hiện)">↗</a>
+      <button data-act="web-close" aria-label="Đóng trang web" title="Đóng trang web">✕</button>
+    </div>
+    <iframe id="webFrame" title="Trang web" allow="fullscreen; clipboard-write; autoplay; microphone; camera" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div id="webMenu" class="celeb-menu web-menu" hidden role="dialog" aria-label="Mở trang web">
+    <label for="webUrl2" class="web-lbl">Địa chỉ trang web</label>
+    <input type="text" id="webUrl2" list="webPresets" autocomplete="off" spellcheck="false" placeholder="https://…">
+    <datalist id="webPresets"><option value="https://dojotienluc.vercel.app/"></option><option value="https://k12scorm-3kj9.vercel.app/"></option></datalist>
+    <div class="web-sizes">
+      <button data-act="web-open" data-size="25"><b>¼</b><span>1/4 màn hình</span></button>
+      <button data-act="web-open" data-size="50"><b>½</b><span>1/2 màn hình</span></button>
+      <button data-act="web-open" data-size="100"><b>⛶</b><span>Toàn màn hình</span></button>
+    </div>
+    <div class="ce-btns"><button data-act="web-close">Đóng trang web</button><button data-act="web-menu">Đóng menu</button></div>
+    <p class="web-note">Hình và chữ bên trái tự thu gọn cho vừa phần còn lại. Nếu trang không hiện, bấm ↗ để mở tab mới.</p>
   </div>
   <div id="ssHint" role="status"></div>
   <button class="ss-nav ss-prev" data-act="ss-prev" aria-label="Hình trước">‹</button>
@@ -653,6 +702,7 @@ body.hm-lock{overflow:hidden}
       </div>
       <div class="ss-grp">
         <button data-act="mu-toggle" id="ssMusic" title="Bật nhạc nền ( M )" aria-label="Nhạc nền">🎵</button><input type="range" id="ssVol" class="ss-vol" min="0" max="100" value="50" aria-label="Âm lượng nhạc nền">
+        <button data-act="web-menu" id="ssWebBtn" title="Mở trang web bên phải ( W )">🌐 Web</button>
         <button data-act="ce-menu" title="Hiệu ứng chúc mừng ( E )">🎉 Hiệu ứng</button>
         <button data-act="ss-black" title="Màn hình đen ( B )">⬛</button>
         <button data-act="ss-thumbs" title="Danh sách hình ( T )">🖼</button>
@@ -1370,6 +1420,7 @@ if (BOOT && BOOT.mode === 'student') {
 const TH = window.TH;
 const { esc, toast, renderMath, imgCandidates, setBackground, slugify, fmt, fmtTime, Game, keyOf, splitTag } = TH;
 const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const KEY = 'tuhbm_v1', VER = 1;
 const state = { version: VER, title: '', bg: '', sbg: '', theme: 'auto', allowTheme: true, pick: 'random', fileName: '', qa: [], links: [], lastClass: '', results: [], pGrade: '10', pBai: '', pCount: 24, endpoint: '', gkey: '', rosters: {}, sheetUrl: '', lessons: [], vd: [], vdUrl: '', lib: { img: [], music: [] }, noSbg: false, muVol: 0.5, muLoop: true };
 let view = 'home', slides = [], uid = 0, saveWarned = false;
@@ -2194,7 +2245,7 @@ function ssStart() {
 }
 function ssClose() {
   if (!SS.open) return;
-  ceStop(); ceMenuToggle(false); SS.open = false; ssRoot().hidden = true; $('#ssStage').innerHTML = ''; clearTimeout(SS.idleT);
+  ceStop(); ceMenuToggle(false); webMenuToggle(false); webApply(0); SS.open = false; ssRoot().hidden = true; $('#ssStage').innerHTML = ''; clearTimeout(SS.idleT);
   if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
 }
 document.addEventListener('fullscreenchange', () => { if (SS.open && !document.fullscreenElement) { setTimeout(() => { if (SS.open) { ssApply(); ssSizeCanvas(); } }, 150); } });
@@ -2284,8 +2335,8 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { const m = document.querySelector('.hm-menu[open]'); if (m) { m.open = false; return; } }
   if (e.key === 'Escape' && document.body.classList.contains('hm-lock')) { hmClose(); return; }
   if (!SS.open) return;
-  if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range') { if (e.key === 'Escape') ceMenuToggle(false); return; }
-  if (e.key === 'Escape') { if (CE.on) { ceStop(); return; } const cm = $('#celebMenu'); if (cm && !cm.hidden) { ceMenuToggle(false); return; } }
+  if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range') { if (e.key === 'Escape') { ceMenuToggle(false); webMenuToggle(false); } if (e.key === 'Enter' && e.target.id === 'webUrl') webLoad(e.target.value); if (e.key === 'Enter' && e.target.id === 'webUrl2') webOpen(SS.web || 50); return; }
+  if (e.key === 'Escape') { if (CE.on) { ceStop(); return; } const cm = $('#celebMenu'); if (cm && !cm.hidden) { ceMenuToggle(false); return; } const wm = $('#webMenu'); if (wm && !wm.hidden) { webMenuToggle(false); return; } }
   const k = e.key; ssIdle();
   if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); ssStep(1); }
   else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); ssStep(-1); }
@@ -2305,6 +2356,7 @@ document.addEventListener('keydown', e => {
   else if (k === 'b' || k === 'B' || k === '.') ssBlack();
   else if (k === 'm' || k === 'M') muToggle();
   else if (k === 'e' || k === 'E') ceMenuToggle();
+  else if (k === 'w' || k === 'W') webMenuToggle();
   else if (k === 't' || k === 'T') ssThumbsToggle();
   else if (k === 'f' || k === 'F') ssFull();
   else if (k === 'Escape') {
@@ -2434,6 +2486,39 @@ document.body.appendChild(muFileIn); document.body.appendChild(libIn);
 muFileIn.addEventListener('change', () => { const f = muFileIn.files[0]; if (f) muPlay({ id: 'local', url: 'file:' + f.name, name: f.name + ' (từ máy)' }, URL.createObjectURL(f)); muFileIn.value = ''; refreshLib(); });
 libIn.addEventListener('change', () => { if (libIn.files[0]) libImport(libIn.files[0]); libIn.value = ''; });
 
+/* ---------- Cửa sổ web bên phải khi trình chiếu: 1/4, 1/2, toàn màn hình ---------- */
+const WEB_DEFAULT = 'https://dojotienluc.vercel.app/';
+const webNorm = u => { u = String(u || '').trim(); if (!u) return ''; if (!/^https?:\/\//i.test(u)) u = 'https://' + u; try { return new URL(u).href; } catch (e) { return ''; } };
+function webApply(pct) {
+  const r = ssRoot(); SS.web = pct;
+  const px = Math.round(window.innerWidth * pct / 100);
+  r.style.setProperty('--webpx', px + 'px');
+  r.classList.toggle('web-on', pct > 0); r.classList.toggle('web-full', pct === 100);
+  $('#webPane').hidden = !pct;
+  $('#ssWebBtn').classList.toggle('on', pct > 0);
+  $$('#webPane [data-act=web-size]').forEach(b => b.classList.toggle('on', +b.dataset.size === pct));
+  if (SS.open && pct < 100) requestAnimationFrame(() => { ssSizeCanvas(); ssFit(); });
+}
+function webLoad(url) {
+  const u = webNorm(url);
+  if (!u) { toast('Hãy nhập địa chỉ trang web hợp lệ.'); return false; }
+  state.webUrl = u; save();
+  const f = $('#webFrame'); if (f.dataset.url !== u) { f.src = u; f.dataset.url = u; }
+  $('#webUrl').value = u; $('#webUrl2').value = u; $('#webOpen').href = u;
+  return true;
+}
+function webOpen(pct) {
+  if (!webLoad($('#webUrl2').value || state.webUrl || WEB_DEFAULT)) return;
+  webMenuToggle(false); webApply(pct);
+}
+function webClose() { webApply(0); webMenuToggle(false); }
+function webMenuToggle(on) {
+  const m = $('#webMenu'); if (!m) return;
+  const show = on == null ? m.hidden : on; m.hidden = !show;
+  if (show) { ceMenuToggle(false); $('#webUrl2').value = state.webUrl || WEB_DEFAULT; }
+}
+window.addEventListener('resize', () => { if (SS.web) webApply(SS.web); });
+
 /* ---------- Hiệu ứng chúc mừng: Sinh nhật, Vinh danh chiến thắng (lặp liên tục đến khi dừng) ---------- */
 const CE = { on: false, raf: 0, ctx: null, W: 0, H: 0, dpr: 1, last: 0, parts: [], rockets: [], balloons: [], type: 'birthday', name: '', sub: '', next: { fw: 0, cannon: 0, balloon: 0, star: 0, text: 0 }, t: 0, low: false };
 const CE_COLORS = ['#ff4d6d', '#ffb703', '#4cc9f0', '#80ed99', '#b388ff', '#ff8fab', '#ffd166', '#06d6a0', '#f72585', '#48cae4'];
@@ -2457,6 +2542,7 @@ function ceMenuToggle(on) {
   const m = $('#celebMenu'); if (!m) return;
   const show = on == null ? m.hidden : on; m.hidden = !show;
   if (show) {
+    webMenuToggle(false);
     const c = state.celeb || { type: 'birthday', name: '', sub: '' };
     m.querySelectorAll('input[name=ceType]').forEach(r => { r.checked = r.value === c.type; });
     $('#ceName').value = c.name || ''; $('#ceSub').value = c.sub || ''; $('#ceTitle').value = c.title || ''; ceSubHint();
@@ -2721,6 +2807,11 @@ TH.onAct = (act, el) => {
     case 'ss-clear': ssClearInk(); break;
     case 'ss-black': ssBlack(); break;
     case 'ce-menu': ceMenuToggle(); break;
+    case 'web-menu': webMenuToggle(); break;
+    case 'web-open': webOpen(+el.dataset.size); break;
+    case 'web-size': webApply(+el.dataset.size); break;
+    case 'web-close': webClose(); break;
+    case 'web-go': webLoad($('#webUrl').value); break;
     case 'ce-start': ceStart(); break;
     case 'ce-stop': ceStop(); break;
     case 'ss-thumbs': ssThumbsToggle(); break;
