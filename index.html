@@ -682,6 +682,10 @@ body.hm-lock{overflow:hidden}
 .bd-miss{background:#fde2e1;color:#a4281f}.bd-late{background:#fff0c2;color:#8a5a00}.bd-ok{background:#e1f5e6}.bd-list{margin:.4rem 0 .6rem 1.1rem;padding:0}.bd-list li{margin:.25rem 0}
 @media (prefers-color-scheme:dark){.bd-miss{background:#4a2020;color:#ffb3ad}.bd-late{background:#4a3c14;color:#ffd77a}.bd-ok{background:#1c3a26}}
 .web-bar #webUrl{visibility:hidden;pointer-events:none}
+
+.web-title{flex:1;min-width:0;font-size:.9rem;font-weight:700;padding-left:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ggb-host{flex:1;min-height:0;width:100%;background:#fff;position:relative;overflow:hidden}.ggb-wait{position:absolute;inset:0;display:grid;place-items:center;margin:0;color:#555}
+.slideshow.web-on #ssGgbBtn.on{background:rgb(255 255 255/.28);border-color:#fff}
 </style>
 </head>
 <body>
@@ -718,6 +722,26 @@ body.hm-lock{overflow:hidden}
       <button data-act="web-close" aria-label="Đóng trang web" title="Đóng trang web">✕</button>
     </div>
     <iframe id="webFrame" title="Trang web" allow="fullscreen; clipboard-write; autoplay; microphone; camera" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div id="ggbPane" class="web-pane" hidden>
+    <div class="web-bar">
+      <span class="web-title">📐 Vẽ hình</span>
+      <button data-act="ggb-clear" title="Xóa hết hình, giữ lưới ô vuông">🗑 Xóa hết</button>
+      <span class="web-sz" role="group" aria-label="Cỡ cửa sổ vẽ hình"><button data-act="web-size" data-size="25" title="1/4 màn hình">¼</button><button data-act="web-size" data-size="50" title="1/2 màn hình">½</button><button data-act="web-size" data-size="100" title="Toàn màn hình">⛶</button></span>
+      <a href="https://www.geogebra.org/calculator" target="_blank" rel="noopener noreferrer" title="Mở GeoGebra đầy đủ trong tab mới">↗</a>
+      <button data-act="web-close" aria-label="Đóng công cụ vẽ hình" title="Đóng">✕</button>
+    </div>
+    <div id="ggbHost" class="ggb-host"><p class="ggb-wait">Đang tải GeoGebra…</p></div>
+  </div>
+  <div id="ggbMenu" class="celeb-menu web-menu" hidden role="dialog" aria-label="Công cụ vẽ hình">
+    <p class="web-lbl">Công cụ vẽ hình GeoGebra</p>
+    <p class="web-note" style="margin-top:0">Mở ra chỉ có lưới ô vuông và thanh công cụ vẽ gọn (điểm, đoạn thẳng, đường tròn, đa giác, đo góc…). Cần có mạng.</p>
+    <div class="web-sizes">
+      <button data-act="ggb-open" data-size="25"><b>¼</b><span>1/4 màn hình</span></button>
+      <button data-act="ggb-open" data-size="50"><b>½</b><span>1/2 màn hình</span></button>
+      <button data-act="ggb-open" data-size="100"><b>⛶</b><span>Toàn màn hình</span></button>
+    </div>
+    <div class="ce-btns"><button data-act="web-close">Đóng vẽ hình</button><button data-act="ggb-menu">Đóng menu</button></div>
   </div>
   <div id="webMenu" class="celeb-menu web-menu" hidden role="dialog" aria-label="Mở trang web">
     <label for="webUrl2" class="web-lbl">Địa chỉ trang web</label>
@@ -762,6 +786,7 @@ body.hm-lock{overflow:hidden}
       <div class="ss-grp">
         <button data-act="mu-toggle" id="ssMusic" title="Bật nhạc nền ( M )" aria-label="Nhạc nền">🎵</button><input type="range" id="ssVol" class="ss-vol" min="0" max="100" value="50" aria-label="Âm lượng nhạc nền">
         <button data-act="web-menu" id="ssWebBtn" title="Mở trang web bên phải ( W )">🌐 Web</button>
+        <button data-act="ggb-menu" id="ssGgbBtn" title="Mở công cụ vẽ hình bên phải ( G )">📐 Vẽ hình</button>
         <button data-act="ce-menu" title="Hiệu ứng chúc mừng ( E )">🎉 Hiệu ứng</button>
         <button data-act="ss-black" title="Màn hình đen ( B )">⬛</button>
         <button data-act="ss-thumbs" title="Danh sách hình ( T )">🖼</button>
@@ -3114,8 +3139,8 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { const m = document.querySelector('.hm-menu[open]'); if (m) { m.open = false; return; } }
   if (e.key === 'Escape' && document.body.classList.contains('hm-lock')) { hmClose(); return; }
   if (!SS.open) return;
-  if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range') { if (e.key === 'Escape') { ceMenuToggle(false); webMenuToggle(false); } if (e.key === 'Enter' && e.target.id === 'webUrl') webLoad(e.target.value); if (e.key === 'Enter' && e.target.id === 'webUrl2') webOpen(SS.web || 50); return; }
-  if (e.key === 'Escape') { if (CE.on) { ceStop(); return; } const cm = $('#celebMenu'); if (cm && !cm.hidden) { ceMenuToggle(false); return; } const wm = $('#webMenu'); if (wm && !wm.hidden) { webMenuToggle(false); return; } }
+  if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range') { if (e.key === 'Escape') { ceMenuToggle(false); webMenuToggle(false); ggbMenuToggle(false); } if (e.key === 'Enter' && e.target.id === 'webUrl') webLoad(e.target.value); if (e.key === 'Enter' && e.target.id === 'webUrl2') webOpen(SS.web || 50); return; }
+  if (e.key === 'Escape') { if (CE.on) { ceStop(); return; } const cm = $('#celebMenu'); if (cm && !cm.hidden) { ceMenuToggle(false); return; } const wm = $('#webMenu'); if (wm && !wm.hidden) { webMenuToggle(false); return; } const gm = $('#ggbMenu'); if (gm && !gm.hidden) { ggbMenuToggle(false); return; } }
   const k = e.key; ssIdle();
   if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); ssStep(1); }
   else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); ssStep(-1); }
@@ -3136,6 +3161,7 @@ document.addEventListener('keydown', e => {
   else if (k === 'm' || k === 'M') muToggle();
   else if (k === 'e' || k === 'E') ceMenuToggle();
   else if (k === 'w' || k === 'W') webMenuToggle();
+  else if (k === 'g' || k === 'G') ggbMenuToggle();
   else if (k === 't' || k === 'T') ssThumbsToggle();
   else if (k === 'f' || k === 'F') ssFull();
   else if (k === 'Escape') {
@@ -3273,10 +3299,13 @@ function webApply(pct) {
   const px = Math.round(window.innerWidth * pct / 100);
   r.style.setProperty('--webpx', px + 'px');
   r.classList.toggle('web-on', pct > 0); r.classList.toggle('web-full', pct === 100);
-  $('#webPane').hidden = !pct;
-  $('#ssWebBtn').classList.toggle('on', pct > 0);
-  $$('#webPane [data-act=web-size]').forEach(b => b.classList.toggle('on', +b.dataset.size === pct));
+  $('#webPane').hidden = !pct || SS.pane === 'ggb';
+  $('#ggbPane').hidden = !pct || SS.pane !== 'ggb';
+  $('#ssWebBtn').classList.toggle('on', pct > 0 && SS.pane !== 'ggb');
+  $('#ssGgbBtn').classList.toggle('on', pct > 0 && SS.pane === 'ggb');
+  $$('#webPane [data-act=web-size], #ggbPane [data-act=web-size]').forEach(b => b.classList.toggle('on', +b.dataset.size === pct));
   if (SS.open && pct < 100) requestAnimationFrame(() => { ssSizeCanvas(); ssFit(); });
+  if (pct && SS.pane === 'ggb') setTimeout(ggbFit, 60);
 }
 function webLoad(url) {
   const u = webNorm(url);
@@ -3287,15 +3316,46 @@ function webLoad(url) {
   return true;
 }
 function webOpen(pct) {
-  if (!webLoad($('#webUrl2').value || state.webUrl || WEB_DEFAULT)) return;
-  webMenuToggle(false); webApply(pct);
+  if (!webLoad($('#webUrl2').value || WEB_DEFAULT)) return;
+  SS.pane = 'web'; webMenuToggle(false); webApply(pct);
 }
-function webClose() { webApply(0); webMenuToggle(false); }
+function webClose() { webApply(0); webMenuToggle(false); ggbMenuToggle(false); }
 function webMenuToggle(on) {
   const m = $('#webMenu'); if (!m) return;
   const show = on == null ? m.hidden : on; m.hidden = !show;
-  if (show) { ceMenuToggle(false); $('#webUrl2').value = state.webUrl || WEB_DEFAULT; }
+  if (show) { ceMenuToggle(false); ggbMenuToggle(false); $('#webUrl2').value = WEB_DEFAULT; }
 }
+/* ---------- Công cụ vẽ hình GeoGebra bên phải: chỉ lưới ô vuông + thanh công cụ vẽ gọn ---------- */
+const GGB = { loading: false, api: null, ready: false, ro: null };
+function ggbMenuToggle(on) {
+  const m = $('#ggbMenu'); if (!m) return;
+  const show = on == null ? m.hidden : on; m.hidden = !show;
+  if (show) { ceMenuToggle(false); webMenuToggle(false); }
+}
+function ggbSize() { const h = $('#ggbHost'); return { w: Math.max(200, Math.floor(h.clientWidth)), h: Math.max(200, Math.floor(h.clientHeight)) }; }
+function ggbFallback() {
+  const h = $('#ggbHost'); h.innerHTML = '<iframe title="GeoGebra" src="https://www.geogebra.org/calculator" allow="fullscreen; clipboard-write" style="width:100%;height:100%;border:0"></iframe>';
+}
+function ggbLoadScript(cb) {
+  if (window.GGBApplet) { cb(); return; }
+  const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js'; s.onload = cb; s.onerror = ggbFallback; document.head.appendChild(s);
+}
+function ggbGrid(api) { try { api.setAxesVisible(false, false); api.setGridVisible(true); } catch (e) { /* bỏ qua */ } }
+function ggbInit() {
+  if (GGB.ready || GGB.loading) { ggbFit(); return; }
+  GGB.loading = true;
+  const guard = setTimeout(() => { if (!GGB.ready) { GGB.loading = false; ggbFallback(); } }, 12000);
+  ggbLoadScript(() => {
+    const sz = ggbSize(), host = $('#ggbHost');
+    const app = new GGBApplet({ appName: 'geometry', id: 'ggbApplet', width: sz.w, height: sz.h, showToolBar: true, showAlgebraInput: false, showMenuBar: false, showToolBarHelp: false, showResetIcon: false, allowStyleBar: true, enableRightClick: true, enableShiftDragZoom: true, enableLabelDrags: true, errorDialogsActive: false, useBrowserForJS: true, language: 'vi', borderColor: null, showFullscreenButton: false,
+      appletOnLoad: api => { clearTimeout(guard); GGB.api = api; GGB.ready = true; GGB.loading = false; ggbGrid(api); ggbFit(); } }, true);
+    host.innerHTML = ''; app.inject('ggbHost');
+    if (window.ResizeObserver && !GGB.ro) { GGB.ro = new ResizeObserver(ggbFit); GGB.ro.observe(host); }
+  });
+}
+function ggbFit() { if (!GGB.api || !SS.open) return; const z = ggbSize(); try { GGB.api.setSize(z.w, z.h); } catch (e) { /* bỏ qua */ } }
+function ggbOpen(pct) { SS.pane = 'ggb'; ggbMenuToggle(false); webApply(pct); ggbInit(); requestAnimationFrame(ggbFit); }
+function ggbClear() { if (GGB.api) { try { GGB.api.newConstruction(); ggbGrid(GGB.api); } catch (e) { /* bỏ qua */ } } }
 window.addEventListener('resize', () => { if (SS.web) webApply(SS.web); });
 
 /* ---------- Hiệu ứng chúc mừng: Sinh nhật, Vinh danh chiến thắng (lặp liên tục đến khi dừng) ---------- */
@@ -3321,7 +3381,7 @@ function ceMenuToggle(on) {
   const m = $('#celebMenu'); if (!m) return;
   const show = on == null ? m.hidden : on; m.hidden = !show;
   if (show) {
-    webMenuToggle(false);
+    webMenuToggle(false); ggbMenuToggle(false);
     const c = state.celeb || { type: 'birthday', name: '', sub: '' };
     m.querySelectorAll('input[name=ceType]').forEach(r => { r.checked = r.value === c.type; });
     $('#ceName').value = c.name || ''; $('#ceSub').value = c.sub || ''; $('#ceTitle').value = c.title || ''; ceSubHint();
@@ -3630,6 +3690,9 @@ TH.onAct = (act, el) => {
     case 'ss-black': ssBlack(); break;
     case 'ce-menu': ceMenuToggle(); break;
     case 'web-menu': webMenuToggle(); break;
+    case 'ggb-menu': ggbMenuToggle(); break;
+    case 'ggb-open': ggbOpen(+el.dataset.size); break;
+    case 'ggb-clear': ggbClear(); break;
     case 'web-open': webOpen(+el.dataset.size); break;
     case 'web-size': webApply(+el.dataset.size); break;
     case 'web-close': webClose(); break;
