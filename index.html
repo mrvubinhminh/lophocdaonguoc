@@ -488,7 +488,7 @@ html.mode-board .tbl{font-size:1.1rem}
 .hm-tile b{font-size:clamp(1rem,2.4vh,1.3rem);color:var(--primary)}
 .hm-tile small{color:var(--muted);font-size:clamp(.78rem,1.7vh,.95rem)}
 .hm-tile em{font-style:normal;font-weight:700;font-size:clamp(.8rem,1.8vh,.95rem);margin-top:.2rem;color:var(--text)}
-.hm-acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.5rem,1.6vh,1rem)}
+.hm-acts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.5rem,1.6vh,1rem)}
 .hm-acts .act-card{padding:clamp(.6rem,1.8vh,1.1rem) var(--s4);display:flex;flex-direction:column;gap:.2rem}
 .hm-acts .act-card span{font-size:.88rem}
 .hm-hint{margin:0;min-height:0}.hm-hint:empty{display:none}
@@ -623,6 +623,18 @@ body.hm-lock{overflow:hidden}
 .web-sizes button span{font-size:.78rem}
 .web-sizes button:hover,.web-sizes button:focus-visible{background:linear-gradient(135deg,#ff8fab,#ffb703);color:#2a1200;border-color:#fff;outline:none}
 .web-note{margin:0;font-size:.78rem;color:rgb(255 255 255/.7)}
+
+.nt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.nt-gifts{border:1px solid var(--line);border-radius:var(--radius);padding:.6rem .8rem;margin:.8rem 0 0}
+.nt-gifts legend{font-weight:700;padding:0 .3rem}
+#ntGifts{display:flex;flex-wrap:wrap;gap:.4rem;margin:.3rem 0 .6rem}
+.nt-chip{cursor:pointer}.nt-chip input{position:absolute;opacity:0;pointer-events:none}
+.nt-chip span{display:inline-block;padding:.35rem .75rem;border:2px solid var(--line);border-radius:999px;font-size:.88rem;background:var(--paper);transition:.15s}
+.nt-chip input:checked+span{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 16%,var(--paper));font-weight:700}
+.nt-chip input:focus-visible+span{outline:3px solid var(--primary);outline-offset:2px}
+.nt-out{width:100%;font:inherit;line-height:1.55;border:2px solid var(--line);border-radius:var(--radius);padding:.7rem .9rem;background:var(--paper);color:var(--text);resize:vertical}
+.nt-btns{margin-top:.6rem;flex-wrap:wrap}
+@media(max-width:600px){.nt-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1744,6 +1756,7 @@ function renderHome() {
     '<div class="hm-acts">' +
     '<button class="act-card" id="actExport" data-act="export-open"><b>Tạo file HTML cho học sinh</b><span>Chọn ảnh nền (nếu muốn), rồi tải file.</span></button>' +
     '<button class="act-card" id="actBoard" data-act="board"><b>Giảng bài trên lớp</b><span>Học sinh lên bảng, rồi trình chiếu hình.</span></button>' +
+    '<button class="act-card" data-act="notice-open"><b>📣 Gửi thông báo cho học sinh</b><span>Nhắc học bài, hạn chót, quà bí mật.</span></button>' +
     '<button class="act-card" data-act="dash"' + (endpointOk() ? '' : ' disabled') + '><b>Xem kết quả cả lớp</b><span>' + (endpointOk() ? 'Câu hay nhầm, điểm từng em.' : 'Cần kết nối Google Sheet (mục 4).') + '</span></button>' +
     '</div><p class="hint hm-hint" id="actHint"></p>' +
     hmPan('pan0', introHtml()) +
@@ -1783,9 +1796,10 @@ function renderHome() {
       '<label class="opt"><input type="checkbox" id="xNoBg"> Không dùng ảnh nền (học sinh thấy nền màu trơn)</label>' +
       '<p class="hint">Để trống: dùng hình nền chung ở mục “Hình nền và giao diện” (nếu có). Nên chọn ảnh sáng, ít chi tiết để chữ dễ đọc. Ảnh nằm sau các khung câu hỏi, không che nội dung.</p>' +
       '<div class="lec-run"><button class="btn btn-primary btn-lg" data-act="export">⬇ Tải file cho học sinh</button></div></section>') +
+    hmPan('pan6', noticeHtml()) +
     hmPan('pan3', imagesCardHtml(3, false) + musicCardHtml()) + hmPan('pan4', gasCardHtml()) +
     '</main>';
-  $('#tPick').value = state.pick; $('#tTheme').value = state.theme; $('#tAllowTheme').checked = !!state.allowTheme;
+  $('#ntSty').value = (state.nt && state.nt.sty) || 'rand'; $('#tPick').value = state.pick; $('#tTheme').value = state.theme; $('#tAllowTheme').checked = !!state.allowTheme;
   $('#pGrade').value = state.pGrade; $('#pBai').value = state.pBai; $('#pCount').value = state.pCount;
   refreshQA(); refreshPrompt(); refreshLessons(); renderThumbs(); hmStatus();
 }
@@ -1800,6 +1814,106 @@ async function testBg(which) {
   const ok = await setBackground(url);
   st.innerHTML = ok ? '<p class="status ok" role="status">✓ Đã tải được hình (xem phía sau các khung).</p>'
     : '<p class="status err" role="alert">✗ Không tải được hình. Hãy kiểm tra link và quyền chia sẻ “Bất kỳ ai có đường liên kết”.</p>';
+}
+
+/* ---------- Thông báo cho học sinh ---------- */
+const NT_GIFTS = [
+  ['🎡', 'Đạt 10 điểm được vào vòng quay số may mắn'], ['🎁', 'Phần thưởng bất ngờ từ thầy'], ['⭐', '1 điểm cộng'], ['🌟', '2 điểm cộng'],
+  ['🏅', '3 điểm cộng'], ['🎫', 'Thẻ miễn khảo bài đầu giờ 1 lần'], ['🍀', 'Thẻ may mắn: chọn chỗ ngồi 1 tuần'], ['🏆', 'Huy hiệu "Chiến binh chăm chỉ"'],
+  ['🍭', 'Quà nhỏ ngọt ngào từ thầy'], ['🎲', 'Hộp quà bí ẩn']
+];
+const NT_QUOTES = [
+  'Mỗi trang sách em đọc hôm nay là một bậc thang đưa em lên cao hơn.', 'Sai không đáng sợ, bỏ cuộc mới đáng tiếc. Cứ thử nhé!', 'Em giỏi hơn em nghĩ rất nhiều.', 'Chăm chỉ mỗi ngày một chút, kết quả sẽ đến bất ngờ.',
+  'Toán học không khó, chỉ cần em kiên nhẫn thêm một chút.', 'Thầy tin ở em. Em cũng hãy tin ở chính mình nhé!', 'Hành trình vạn dặm bắt đầu từ một bước chân, bắt đầu ngay thôi!', 'Hôm nay em cố gắng, ngày mai em tự hào.',
+  'Đọc kỹ, nghĩ chậm, chọn chắc. Em làm được mà!', 'Những em đọc SGK kỹ luôn có lợi thế khi vào lớp.', 'Một câu đúng hôm nay là một niềm vui ngày mai.', 'Em không cần hoàn hảo, chỉ cần tiến bộ mỗi ngày.',
+  'Cái khó ló cái khôn, cứ bình tĩnh nhé!', 'Tự học là món quà quý nhất em dành cho bản thân.', 'Thầy luôn ở đây, em cứ hỏi nếu chưa hiểu.', 'Kiến thức gieo hôm nay, hoa trái gặt mai sau.',
+  'Cố lên! Lớp mình sẽ giỏi lên từng ngày.', 'Mỗi lần thử lại là một lần em mạnh mẽ hơn.', 'Thành công là tổng của những nỗ lực nhỏ lặp lại mỗi ngày.', 'Em xứng đáng với những điều tuyệt vời, bắt đầu từ trang sách này.',
+  'Học vui thì nhớ lâu, em nhé!', 'Đừng so với ai, hãy so với em của hôm qua.', 'Chỉ 15 phút thôi, mà đủ để em tiến thêm một bước.', 'Thầy mong chờ những câu trả lời thông minh của em.',
+  'Khó khăn hôm nay là kinh nghiệm của ngày mai.', 'Em đọc, em hiểu, em chọn đúng. Quá tuyệt!', 'Có công mài sắt, có ngày nên kim.', 'Chiến thắng lớn nhất là chiến thắng sự lười biếng của chính mình.',
+  'Hãy đọc SGK như đọc một câu chuyện thú vị, rồi tìm ra bí mật bên trong.', 'Em là phiên bản đang được nâng cấp mỗi ngày!', 'Mỗi câu hỏi là một chiếc chìa khóa mở cánh cửa mới.', 'Thầy tự hào về sự cố gắng của các em.',
+  'Học cùng nhau, tiến cùng nhau, lớp mình là số một!', 'Nụ cười của em khi giải được bài là phần thưởng lớn nhất của thầy.', 'Đừng sợ chọn sai, hãy sợ không dám chọn.', 'Giỏi toán bắt đầu từ thói quen đọc kỹ đề và đọc kỹ sách.',
+  'Hôm nay làm xong sớm, tối nay ngủ ngon!', 'Kiên trì là siêu năng lực của người học giỏi.', 'Em đã bắt đầu, vậy là đã đi được nửa chặng đường rồi.', 'Mỗi ngày một ít, vững vàng đến đích.',
+  'Thầy gửi em một cái ôm tinh thần và một chút may mắn nhé!', 'Tin vui sẽ đến với những ai chuẩn bị bài chu đáo.', 'Đọc sách hôm nay, tỏa sáng ngày mai.', 'Em làm được, thầy tin chắc như vậy!',
+  'Học là hành trình, không phải cuộc đua. Cứ đi vững nhé!', 'Một chút tập trung, một chút kiên nhẫn, và rất nhiều niềm vui.', 'Bài mới sẽ dễ dàng hơn nhiều nếu em đã làm quen trước.', 'Hãy để sự tò mò dẫn đường cho em.',
+  'Mỗi em một ngôi sao, và thầy muốn thấy tất cả đều sáng!', 'Cố gắng hết mình rồi, kết quả sẽ không phụ em.'
+];
+/* Dòng bắt đầu bằng § chỉ hiện khi có quà; dòng bắt đầu bằng ¤ chỉ hiện khi có link. */
+const NT_STYLES = [
+  ['💛', 'Thân thiện ấm áp', '💛 Chào {em} thân mến!\n📚 Thầy gửi lời nhắc nhỏ: hãy xem bài giảng "{bai}" trên K12Online, vừa xem vừa mở SGK đọc thật kỹ để chọn đáp án đúng nhất nhé.\n¤🔗 {url}\n⏰ Hạn chót: {han}\n§🎁 {qua}\n💌 {kl}\n✍️ Thầy Vũ Tiến Lực'],
+  ['🎓', 'Trang trọng', '🎓 THÔNG BÁO\nKính gửi {em},\nĐề nghị các em học bài giảng "{bai}" trên hệ thống K12Online, đồng thời đọc Sách giáo khoa và lựa chọn đáp án đúng nhất cho từng câu hỏi.\n¤🔗 Đường dẫn: {url}\n⏰ Thời hạn hoàn thành: {han}\n§🎁 Khen thưởng: {qua}\n📝 {kl}\nTrân trọng,\nThầy Vũ Tiến Lực'],
+  ['😄', 'Hài hước vui nhộn', '😄 ALO ALO! {Lopn} chú ý nè!\nBài "{bai}" đang đứng chờ các em trên K12Online, nó buồn lắm đó 🥺 Hãy mở SGK ra, đọc cho kỹ rồi chọn đáp án đúng nhất để an ủi nó nhé!\n¤🔗 {url}\n⏰ Hết giờ lúc: {han} (qua giờ này bài sẽ… giận dỗi 😤)\n§🎁 {qua}\n🤪 {kl}\n✍️ Thầy Vũ Tiến Lực'],
+  ['🎮', 'Nhiệm vụ game', '🎮 NHIỆM VỤ MỚI ĐÃ MỞ KHÓA!\n⚔️ Chiến binh {lopn}, hãy vào K12Online, vượt ải "{bai}". Vũ khí: SGK. Chiến thuật: đọc kỹ rồi chọn đáp án đúng nhất.\n¤🔗 Cổng vào: {url}\n⏳ Hạn chót: {han}\n§🏆 Phần thưởng: {qua}\n💡 {kl}\n✍️ Thầy Vũ Tiến Lực, Quản trò'],
+  ['🕵️', 'Thám tử giải mã', '🕵️ HỒ SƠ VỤ ÁN: "{bai}"\nCác thám tử {lopn} thân mến, manh mối nằm trong bài giảng trên K12Online và trong SGK. Hãy đọc thật kỹ để tìm ra đáp án đúng nhất!\n¤🔍 Hiện trường: {url}\n⏰ Phải phá án trước: {han}\n§🎁 Phần thưởng cho người phá án: {qua}\n🔎 {kl}\n✍️ Thầy Vũ Tiến Lực, Trưởng ban chuyên án'],
+  ['⚽', 'Huấn luyện viên', '⚽ KHỞI ĐỘNG TRƯỚC TRẬN ĐẤU!\nCác cầu thủ {lopn}, buổi tập hôm nay: xem bài giảng "{bai}" trên K12Online và đọc SGK để chọn đáp án đúng nhất.\n¤🔗 Sân tập: {url}\n⏰ Còn đến: {han}\n§🏅 Giải thưởng: {qua}\n📣 {kl}\n✍️ Thầy Vũ Tiến Lực, HLV'],
+  ['📰', 'Bản tin thời sự', '📰 BẢN TIN LỚP HỌC\nTheo nguồn tin từ Thầy Vũ Tiến Lực, bài giảng "{bai}" đã có trên K12Online. {Em} được đề nghị xem bài, đọc SGK và chọn đáp án đúng nhất.\n¤🔗 {url}\n⏰ Hạn chót: {han}\n§🎁 Tin vui: {qua}\n🎙️ {kl}\n✍️ Thầy Vũ Tiến Lực, phóng viên'],
+  ['💌', 'Thư tay', '💌 Gửi các em {lopn},\nThầy viết đôi dòng nhắn nhủ: các em hãy xem bài giảng "{bai}" trên K12Online, mở SGK ra đọc chậm và kỹ, rồi chọn đáp án đúng nhất nhé.\n¤🔗 {url}\nThầy mong nhận được bài của các em trước {han}.\n§🎁 Thầy có chuẩn bị: {qua}\n🌸 {kl}\nThương mến,\nThầy Vũ Tiến Lực'],
+  ['🚀', 'Du hành vũ trụ', '🚀 PHI HÀNH ĐOÀN {lopn} CHÚ Ý!\nNhiệm vụ: khám phá hành tinh "{bai}" trên K12Online. Bản đồ sao: SGK. Hãy đọc kỹ để chọn đáp án đúng nhất.\n¤🛰️ Tọa độ: {url}\n⏰ Giờ hạ cánh: {han}\n§🌟 Kho báu vũ trụ: {qua}\n🌌 {kl}\n✍️ Thầy Vũ Tiến Lực, Chỉ huy trưởng'],
+  ['🔐', 'Mật lệnh', '🔐 MẬT LỆNH SỐ 1\nGửi: {lopn}. Nội dung: giải mã "{bai}" trên K12Online bằng cách đọc SGK và chọn đáp án đúng nhất.\n¤🔗 Mật khẩu truy cập: {url}\n⏰ Mật lệnh hết hiệu lực: {han}\n§🎁 Phần thưởng tuyệt mật: {qua}\n🤫 {kl}\n✍️ Thầy Vũ Tiến Lực'],
+  ['🍳', 'Công thức nấu ăn', '🍳 CÔNG THỨC "{bai}" CHO {lopn}\n🥣 Nguyên liệu: SGK, bài giảng K12Online, 1 chút tập trung.\n👩‍🍳 Cách làm: xem bài giảng, đọc SGK thật kỹ, rồi chọn đáp án đúng nhất.\n¤🔗 {url}\n⏰ Phải "ra lò" trước: {han}\n§🎁 Món quà tráng miệng: {qua}\n😋 {kl}\n✍️ Thầy Vũ Tiến Lực, đầu bếp'],
+  ['📢', 'Poster sự kiện', '✨✨✨ SỰ KIỆN HỌC TẬP ✨✨✨\n📌 "{bai}"\n👥 Dành cho: {lopn}\n📖 Làm gì: xem bài giảng K12Online, đọc SGK, chọn đáp án đúng nhất\n¤🔗 {url}\n⏰ Hạn chót: {han}\n§🎁 Quà tặng: {qua}\n💫 {kl}\n✍️ Ban tổ chức: Thầy Vũ Tiến Lực'],
+  ['🌿', 'Thơ lục bát', '🌿 Gửi {lopn} đôi dòng:\nBài "{bai}" mới đã sẵn sàng,\nK12Online chờ em sang học liền.\nSGK đọc kỹ cho nhuyễn,\nChọn đáp án đúng, niềm tin vững vàng.\n¤🔗 {url}\n⏰ Hạn chót: {han}\n§🎁 {qua}\n🌸 {kl}\n✍️ Thầy Vũ Tiến Lực'],
+  ['⚡', 'Ngắn gọn súc tích', '⚡ {bai}\n1) Xem bài giảng trên K12Online\n2) Đọc SGK\n3) Chọn đáp án đúng nhất\n¤🔗 {url}\n⏰ Hạn: {han}\n§🎁 {qua}\n💬 {kl}\n✍️ Thầy Vũ Tiến Lực'],
+  ['📮', 'Hộp thư bí mật', '📮 Bạn có 1 thư mới từ thầy!\n"Chào {em}, thầy giấu một bí mật ở bài "{bai}" trên K12Online. Hãy đọc SGK thật kỹ rồi chọn đáp án đúng nhất để tìm ra nhé!"\n¤🔗 {url}\n⏰ Thư tự hủy lúc: {han}\n§🎁 Bí mật là: {qua}\n🤍 {kl}\n✍️ Thầy Vũ Tiến Lực'],
+  ['🎬', 'Trailer phim', '🎬 PHIM SẮP CHIẾU: "{bai}"\nDiễn viên chính: {lopn}. Cảnh quay: bài giảng trên K12Online. Kịch bản: SGK. Bạn sẽ chọn đáp án đúng nhất chứ?\n¤🎟️ Vé xem phim: {url}\n⏰ Suất cuối: {han}\n§🏆 Giải thưởng điện ảnh: {qua}\n🍿 {kl}\n✍️ Thầy Vũ Tiến Lực, đạo diễn'],
+  ['🧭', 'Hành trình khám phá', '🧭 CHẶNG ĐƯỜNG MỚI CỦA {lopn}\nĐiểm đến: "{bai}". Hành trang: bài giảng K12Online và SGK. Chỉ dẫn: đọc kỹ, chọn đáp án đúng nhất.\n¤🗺️ Bản đồ: {url}\n⏰ Phải đến nơi trước: {han}\n§🎁 Quà lưu niệm: {qua}\n🌄 {kl}\n✍️ Thầy Vũ Tiến Lực, hướng dẫn viên'],
+  ['✅', 'Chuyên nghiệp (checklist)', '✅ DANH SÁCH VIỆC CẦN LÀM\nLớp: {cls}\nBài học: {bai}\n☐ Xem bài giảng trên K12Online\n☐ Đọc SGK để đối chiếu\n☐ Chọn đáp án đúng nhất\n¤🔗 {url}\n⏰ Hạn chót: {han}\n§🎁 Khuyến khích: {qua}\n📝 {kl}\nThầy Vũ Tiến Lực'],
+  ['🤗', 'Gần gũi như người thân', '🤗 Các con ơi,\nThầy nhắc nhẹ nè: bài "{bai}" đang chờ trên K12Online. Con xem bài giảng, mở SGK đọc kỹ rồi chọn đáp án đúng nhất nhé, đừng vội, cứ từ từ.\n¤🔗 {url}\n⏰ Con nhớ làm xong trước {han} nha.\n§🎁 Thầy có chút quà: {qua}\n💛 {kl}\nThầy Vũ Tiến Lực'],
+  ['⛰️', 'Chinh phục đỉnh cao', '⛰️ CHINH PHỤC ĐỈNH "{bai}"\n{Em} thân mến, đường lên đỉnh gồm 3 chặng: xem bài giảng K12Online, đọc SGK, chọn đáp án đúng nhất.\n¤🔗 Chân núi: {url}\n⏰ Phải lên tới đỉnh trước: {han}\n§🏔️ Cờ chiến thắng: {qua}\n🔥 {kl}\n✍️ Thầy Vũ Tiến Lực, Người dẫn đường']
+];
+const NT = { sty: -1, q: -1 };
+const ntPick = (n, avoid) => { let i; do { i = Math.floor(Math.random() * n); } while (n > 1 && i === avoid); return i; };
+function ntDate(v) {
+  if (!v) return 'đúng hạn thầy đã dặn';
+  const d = new Date(v); if (isNaN(d)) return v;
+  const th = ['Chủ nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'][d.getDay()], p = n => String(n).padStart(2, '0');
+  return p(d.getHours()) + ':' + p(d.getMinutes()) + ' ngày ' + p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear() + ' (' + th + ')';
+}
+function ntRead() {
+  const n = state.nt = state.nt || {};
+  n.url = $('#ntUrl').value.trim(); n.cls = $('#ntCls').value.trim(); n.due = $('#ntDue').value; n.sty = $('#ntSty').value;
+  n.gifts = $$('#ntGifts input:checked').map(i => +i.value); n.custom = $('#ntCustom').value.trim(); n.secret = $('#ntSecret').checked;
+  save(); return n;
+}
+function ntBuild() {
+  const n = ntRead();
+  if (n.sty === 'rand') { if (NT.sty < 0) NT.sty = ntPick(NT_STYLES.length, -1); } else NT.sty = +n.sty;
+  if (NT.q < 0) NT.q = ntPick(NT_QUOTES.length, -1);
+  const items = n.gifts.map(i => NT_GIFTS[i][0] + ' ' + NT_GIFTS[i][1]); if (n.custom) items.push(n.custom);
+  const qua = !items.length ? '' : n.secret ? 'Một phần quà bí mật đang chờ bạn nào hoàn thành tốt, mở ra khi nộp bài nhé! 🤫' : items.join(' · ');
+  const v = { bai: state.title || '[tên bài]', lopn: n.cls ? 'lớp ' + n.cls : 'lớp mình', Lopn: n.cls ? 'Lớp ' + n.cls : 'Lớp mình', cls: n.cls || 'cả lớp', em: n.cls ? 'các em lớp ' + n.cls : 'các em', Em: n.cls ? 'Các em lớp ' + n.cls : 'Các em', han: ntDate(n.due), url: n.url, qua, kl: NT_QUOTES[NT.q] };
+  const out = NT_STYLES[NT.sty][2].split('\n').map(l => {
+    if (l[0] === '§') { if (!qua) return null; l = l.slice(1); }
+    if (l[0] === '¤') { if (!v.url) return null; l = l.slice(1); }
+    return l.replace(/\{(\w+)\}/g, (m, k) => v[k] != null ? v[k] : m);
+  }).filter(l => l !== null).join('\n');
+  $('#ntOut').value = out; $('#ntStyName').textContent = NT_STYLES[NT.sty][0] + ' ' + NT_STYLES[NT.sty][1] + ' · câu khích lệ ' + (NT.q + 1) + '/' + NT_QUOTES.length;
+}
+function ntAct(act) {
+  if (act === 'nt-make') { NT.sty = -1; NT.q = -1; ntBuild(); }
+  else if (act === 'nt-style') { const n = ntRead(); if (n.sty === 'rand') NT.sty = ntPick(NT_STYLES.length, NT.sty); else { NT.sty = (+n.sty + 1) % NT_STYLES.length; $('#ntSty').value = NT.sty; ntRead(); } ntBuild(); }
+  else if (act === 'nt-quote') { NT.q = ntPick(NT_QUOTES.length, NT.q); ntBuild(); }
+  else if (act === 'nt-copy') {
+    const t = $('#ntOut'); if (!t.value) { ntBuild(); }
+    const ok = () => toast('Đã sao chép thông báo. Hãy dán vào Zalo hoặc nhóm lớp.');
+    const old = () => { t.select(); let r = false; try { r = document.execCommand('copy'); } catch (e) { r = false; } if (r) ok(); else toast('Không sao chép được, hãy bôi đen và sao chép thủ công.'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(ok, old); else old();
+  }
+}
+function noticeHtml() {
+  const n = state.nt || {}, g = n.gifts || [];
+  return '<section class="card"><h2>📣 Gửi thông báo cho học sinh</h2>' +
+    '<p class="hint" style="margin-top:0">Soạn tin nhắn nhắc học sinh xem bài giảng trên K12Online, đọc SGK để chọn đáp án đúng nhất, kèm hạn chót, lời khích lệ ngẫu nhiên và quà bí mật. Ký tên: Thầy Vũ Tiến Lực.</p>' +
+    '<div class="nt-grid"><div><label for="ntCls">Lớp <small class="opt">(không bắt buộc)</small></label><input type="text" id="ntCls" value="' + esc(n.cls || state.lastClass || '') + '" placeholder="Ví dụ: 10A3"></div>' +
+    '<div><label for="ntDue">⏰ Hạn chót</label><input type="datetime-local" id="ntDue" value="' + esc(n.due || '') + '"></div></div>' +
+    '<label for="ntUrl">🔗 Link bài giảng trên K12Online hoặc link làm bài <small class="opt">(không bắt buộc)</small></label><input type="text" id="ntUrl" value="' + esc(n.url || '') + '" placeholder="https://…">' +
+    '<label for="ntSty">🎨 Phong cách viết</label><select id="ntSty"><option value="rand">🎲 Ngẫu nhiên (trong ' + NT_STYLES.length + ' phong cách)</option>' + NT_STYLES.map((s, i) => '<option value="' + i + '">' + s[0] + ' ' + s[1] + '</option>').join('') + '</select>' +
+    '<fieldset class="nt-gifts"><legend>🎁 Quà bí mật <small class="opt">(chọn hoặc tự gõ)</small></legend><div id="ntGifts">' +
+    NT_GIFTS.map((x, i) => '<label class="nt-chip"><input type="checkbox" value="' + i + '"' + (g.includes(i) ? ' checked' : '') + '><span>' + x[0] + ' ' + x[1] + '</span></label>').join('') + '</div>' +
+    '<input type="text" id="ntCustom" value="' + esc(n.custom || '') + '" placeholder="Hoặc tự gõ phần quà, ví dụ: Top 3 bài nộp sớm nhận một phần quà từ thầy">' +
+    '<label class="opt"><input type="checkbox" id="ntSecret"' + (n.secret ? ' checked' : '') + '> Giữ bí mật: chỉ nhắc “có quà bí mật”, không nói quà gì</label></fieldset>' +
+    '<div class="lec-run"><button class="btn btn-primary btn-lg" data-act="nt-make">✨ Tạo thông báo</button></div>' +
+    '<p class="hint" id="ntStyName"></p><textarea id="ntOut" class="nt-out" rows="11" aria-label="Nội dung thông báo, có thể chỉnh sửa" placeholder="Bấm “Tạo thông báo” để xem nội dung."></textarea>' +
+    '<div class="row nt-btns"><button class="btn" data-act="nt-quote">🎲 Đổi câu khích lệ</button><button class="btn" data-act="nt-style">🎨 Đổi phong cách</button><button class="btn btn-primary" data-act="nt-copy">📋 Sao chép</button></div></section>';
 }
 
 /* ---------- Xuất file HTML cho học sinh ---------- */
@@ -2750,6 +2864,8 @@ TH.onAct = (act, el) => {
     case 'home': renderHome(); if (state.bg) setBackground(state.bg); break;
     case 'lecture': renderLecture(); break;
     case 'hm-open': hmOpen(el.dataset.p); break;
+    case 'notice-open': hmOpen('pan6'); break;
+    case 'nt-make': case 'nt-style': case 'nt-quote': case 'nt-copy': ntAct(act); break;
     case 'export-open': {
       if (state.qa.length < 4) { toast('Cần ít nhất 4 cặp câu hỏi – đáp án.'); break; }
       const sel = $('#xLibSel'), L = (state.lib && state.lib.img) || [];
